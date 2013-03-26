@@ -1,0 +1,29 @@
+
+#eventDiv{
+  margin-left: 24%;
+  /*border:1px solid silver;*/
+  border-radius: 6px;
+}
+#sessionId{
+	margin-left: 10%;
+	/*border:1px solid silver;*/
+	border-radius: 6px;
+}
+input[type="search"]{
+position: relative;
+	margin: 5px 20px;
+	padding: 0px;
+	width: 255px;
+	display:block;
+	clear:both !important;
+    border-radius: 0px;
+}
+label{
+	padding-top: 2px;
+	display: inline-block;
+	width: 100px; 
+ 	float: left;
+}
+.threecol{
+	margin-right: 0px !important;
+}
