@@ -1,4 +1,7 @@
 <?php include("header.php");
+$okmessage = null;
+$eventErro = null;
+$typeErro= null;
 if(isset($_POST['submitEvent']))
   {
     //Connection string 
@@ -9,6 +12,7 @@ if(isset($_POST['submitEvent']))
   $eventName =  strip_tags(trim($_POST['eventName']));
   $datepicker =  strip_tags(trim($_POST['datepicker']));
   $eventLoc =  strip_tags(trim($_POST['eventLoc']));
+  $eventDesc =  strip_tags(trim($_POST['Description']));
   $eventType =  strip_tags(trim($_POST['selectType']));
   $eventStart =  strip_tags(trim($_POST['eventStart']));
   $eventEnd =  strip_tags(trim($_POST['eventEnd']));
@@ -16,20 +20,22 @@ if(isset($_POST['submitEvent']))
   $eventContactEmail =  strip_tags(trim($_POST['eventContactEmail']));
   $eventContactPhone =  strip_tags(trim($_POST['eventContactPhone']));
 
-  if (strlen(trim($eventName)) == 0) {
-    $nameErro = "Event Name cannot be empty.<br>";
+  if (strlen(trim($eventName)) == 0 || strlen(trim($datepicker)) == 0 || strlen(trim($eventLoc)) == 0) {
+    $eventErro = "Event name, date, and location cannot be empty.<br>";
   }
-  if (!isset($nameErro)) {
+  if ($eventType == "select") {
+    $typeErro = "Event type is not selected.<br>";
+  }
+  
+  if ($eventErro != null && $typeErro != null) {
     $sql = "INSERT INTO `tfscdb`.`event` 
     (`Name`, `Date`, `Location`, `Event_Type`, `Description`, `Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, `Contact_Phone`) 
-    VALUES ('$eventName', '$datepicker', '$eventLoc', '$eventType', 'ssssssssss', '$eventStart', '$eventEnd', '$eventContactName', '$eventContactEmail', '$eventContactPhone');";
+    VALUES ('$eventName', '$datepicker', '$eventLoc', '$eventType', 'Description', '$eventStart', '$eventEnd', '$eventContactName', '$eventContactEmail', '$eventContactPhone');";
 
           $result = mysql_query($sql, $connection) or die ("Could not excute sql $sql");
           $okmessage = "You have created an event successfully.";
-         
-         
+            
     }
-
     mysql_close(); 
     
     }
@@ -54,7 +60,7 @@ if(isset($_POST['submitEvent']))
         <label>Event Name: </label> <input type = "text" name = "eventName"><br>
         <label>Date: </label> <input type = "text" name = "datepicker" id = "datepicker"><br>
         <label>Location:</label> <input type = "text" name = "eventLoc"><br>
-        <label>Description:</label><textarea rows="3"></textarea><br>
+        <label>Description:</label><textarea name = "Description" rows="3"></textarea><br>
         <label>Event Type:</label> <select name = "selectType" id="selectType"> 
                     <option value="select">--Select One--</option>
                     <option value="TA">Teaching Assistant Luncheon</option>
@@ -72,10 +78,18 @@ if(isset($_POST['submitEvent']))
           <button class="btn" type="submit" name ='submitEvent'>Add Event</button><br>
            <div class="alert alert-success">
             <?php
-            if($okmessage)
-          {
-            echo $okmessage;
-          }
+            if ($eventErro != null) {
+             echo $eventErro;
+            }
+            if ($typeErro != null) {
+             echo $typeErro;
+            }
+            if ($okmessage != null) {
+               echo $okmessage;
+            }
+               
+            
+         
             ?>
             </div>
 <!-- 
@@ -138,18 +152,7 @@ if(isset($_POST['submitEvent']))
               </tr>
               </table>
             </div>
- 
-        Event Name: <input type = "text" name = "eventname"><br>
-        Date: <input type = "text" id = "datepicker"><br>
-        Select a type:
-                  <select id="selectType">
-                    <option value="select">--Select One--</option>
-                    <option value="TA">Teaching Assistant Luncheon</option>
-                    <option value="FACULTY">New Faculty Luncheon</option>
-                    <option value="FACULTY">All Faculty Luncheon</option>
-                    <option value="SYMPOSIUM">Teaching Symposium</option>
-                    <option value="RETREAT">Teaching Retreat</option>
-                  </select>
+
 -->
         </FORM> 
     </div>    
