@@ -1,7 +1,5 @@
 <?php include("header.php");
-$okmessage = null;
-$eventErro = null;
-$typeErro= null;
+
 if(isset($_POST['submitEvent']))
   {
     //Connection string 
@@ -19,26 +17,56 @@ if(isset($_POST['submitEvent']))
   $eventContactName =  strip_tags(trim($_POST['eventContactName']));
   $eventContactEmail =  strip_tags(trim($_POST['eventContactEmail']));
   $eventContactPhone =  strip_tags(trim($_POST['eventContactPhone']));
-
-  if (strlen(trim($eventName)) == 0 || strlen(trim($datepicker)) == 0 || strlen(trim($eventLoc)) == 0) {
-    $eventErro = "Event name, date, and location cannot be empty.<br>";
-  }
+  //Session Info
+  $sessionDesc = strip_tags(trim($_POST['sessionDesc']));
+  /*Validation for user input*/
   if ($eventType == "select") {
     $typeErro = "Event type is not selected.<br>";
   }
+  if(strlen($eventName) == 0){
+    $nameErro = "Event name cannot be empty.<br>";
+  }
+  if (strlen($eventLoc) == 0) {
+    $locErro = "Event location cannot be empty.<br>";
+  }
+  if (strlen($datepicker) == 0) {
+    $dateErro = "Event date cannot be empty.";
+  }
   
-  if ($eventErro != null && $typeErro != null) {
-    $sql = "INSERT INTO `tfscdb`.`event` 
-    (`Name`, `Date`, `Location`, `Event_Type`, `Description`, `Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, `Contact_Phone`) 
-    VALUES ('$eventName', '$datepicker', '$eventLoc', '$eventType', 'Description', '$eventStart', '$eventEnd', '$eventContactName', '$eventContactEmail', '$eventContactPhone');";
-
-          $result = mysql_query($sql, $connection) or die ("Could not excute sql $sql");
-          $okmessage = "You have created an event successfully.";
-            
+  if (isset($typeErro) != true && isset($nameErro) != true && isset($locErro) != true && isset($dateErro) != true ) {
+    
+    if ($eventType == 'SYMPOSIUM') {
+     
+      $sql1 = "INSERT INTO `tfscdb`.`event` 
+        (`Name`, `Date`, `Location`, `Event_Type`, `Description`, `Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, `Contact_Phone`) 
+        VALUES ('$eventName', '$datepicker', '$eventLoc', '$eventType', 'Description', '$eventStart', '$eventEnd', '$eventContactName', '$eventContactEmail', '$eventContactPhone');";
+      $sql2 = " INSERT INTO `tfscdb`.`session` (`Description`, `Event_ID`) VALUES ('$sessionDesc', last_insert_id());";
+      
+      if (mysql_query('BEGIN')) {
+          if (mysql_query($sql1, $connection) &&
+              mysql_query($sql2, $connection)){
+              mysql_query('COMMIT');
+              $okmessage = "You have created an event successfully.";
+              } // both queries looked OK, save
+          else{
+              mysql_query('ROLLBACK'); // problems with queries, no changes
+              $okmessage = "Event creating failed";
+              }
+      }
     }
+    else{
+      
+         $sql = "INSERT INTO `tfscdb`.`event` 
+        (`Name`, `Date`, `Location`, `Event_Type`, `Description`, `Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, `Contact_Phone`) 
+        VALUES ('$eventName', '$datepicker', '$eventLoc', '$eventType', 'Description', '$eventStart', '$eventEnd', '$eventContactName', '$eventContactEmail', '$eventContactPhone');";
+        
+        $result = mysql_query($sql, $connection) or die ("Could not excute sql $sql");
+        $okmessage = "You have created an event successfully.";
+        }
+  }
     mysql_close(); 
     
-    }
+  }
 ?>
 
 <body>
@@ -78,13 +106,20 @@ if(isset($_POST['submitEvent']))
           <button class="btn" type="submit" name ='submitEvent'>Add Event</button><br>
            <div class="alert alert-success">
             <?php
-            if ($eventErro != null) {
-             echo $eventErro;
-            }
-            if ($typeErro != null) {
+            
+            if (isset($typeErro) == ture) {
              echo $typeErro;
             }
-            if ($okmessage != null) {
+            if (isset($nameErro) == ture) {
+             echo $nameErro;
+            }
+            if (isset($locErro) == ture) {
+             echo $locErro;
+            }
+            if (isset($dateErro) == ture) {
+             echo $dateErro;
+            }
+            if (isset($okmessage) == true) {
                echo $okmessage;
             }
                
@@ -92,68 +127,6 @@ if(isset($_POST['submitEvent']))
          
             ?>
             </div>
-<!-- 
-            <table id = 'eventtable' align="center" witdh="100%">
-              <tr>
-                <td >Event Name:</td>
-                <td><input type = "text" name = "eventName"></td>
-              </tr>
-              <tr>
-                <td>Date:</td>
-                <td><input type = "text" id = "datepicker"></td>
-              </tr>
-              <tr>
-                <td>Location:</td>
-                <td><input type = "text" name = "eventLocation"></td>
-              </tr>
-              <tr id = "eventTypeRow">
-                <td>Event Type:</td>
-                <td>
-                  <select id="selectType">
-                    <option value="select">--Select One--</option>
-                    <option value="TA">Teaching Assistant Luncheon</option>
-                    <option value="FACULTY">New Faculty Luncheon</option>
-                    <option value="FACULTY">All Faculty Luncheon</option>
-                    <option value="SYMPOSIUM">Teaching Symposium</option>
-                    <option value="RETREAT">Teaching Retreat</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Start Time:</td>
-                <td><input type = "text" name = "eventStart"></td>
-              </tr>
-              <tr>
-                <td>End Time:</td>
-                <td><input type = "text" name = "eventEnd"></td>
-              </tr>
-            </table > 
-           <div id = "symdiv"> 
-              <table align="center" witdh="100%">
-              <tr>
-                <td>Session Name:</td>
-                <td><input type = "text" name = "sessionName"></td>
-              </tr>
-              <tr>
-                <td>Speaker:</td>
-                <td><input type = "text" name = "speakerName"></td>
-              </tr>
-              <tr>
-                <td>Start Time:</td>
-                <td><input type = "text" name = "sessionStart"></td>
-              </tr>
-                <tr>
-                  <td>End Time:</td>
-                  <td><input type = "text" name = "sessionEnd"></td>
-                </tr>
-              <tr>
-                <td>Session Description:</td>
-                <td><input type = "text" name = "sessionDesc"></td>
-              </tr>
-              </table>
-            </div>
-
--->
         </FORM> 
     </div>    
   </div>
