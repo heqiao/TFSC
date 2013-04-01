@@ -84,20 +84,76 @@ if(isset($_POST['submitEvent']))
     <!-- Form to post data-->
     <div id = "eventDiv">
         <h1>Create an Event</h1><br>
-        <FORM id="form" name ="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">           
+        <FORM id="form" name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">           
         <label>Event Name: </label> <input type = "text" name = "eventName"><br>
         <label>Date: </label> <input type = "text" name = "datepicker" id = "datepicker"><br>
         <label>Location:</label> <input type = "text" name = "eventLoc"><br>
         <label>Description:</label><textarea name = "Description" rows="3"></textarea><br>
-        <label>Event Type:</label> <select name = "selectType" id="selectType"> 
-                    <option value="select">--Select One--</option>
-                    <option value="TA">Teaching Assistant Luncheon</option>
-                    <option value="FACULTY">New Faculty Luncheon</option>
-                    <option value="FACULTY">All Faculty Luncheon</option>
-                    <option value="SYMPOSIUM">Teaching Symposium</option>
-                    <option value="RETREAT">Teaching Retreat</option>
-                  </select>
-                </br>
+        <label>Event Type:</label>
+		<select name="selectType" id="selectType"> 
+			<option value="select">--Select One--</option>
+			<option value="TA">Teaching Assistant Luncheon</option>
+			<option value="FACULTY">New Faculty Luncheon</option>
+			<option value="FACULTY">All Faculty Luncheon</option>
+			<option value="SYMPOSIUM">Teaching Symposium</option>
+			<option value="RETREAT">Teaching Retreat</option>
+		</select>
+		<br />
+		
+		<style type="text/css" media="screen">
+		.event-section {
+			display: none;
+		}
+		</style>
+		<div class="event-section">
+			<div class="control-group">
+				<label class="control-label" for="sessionDesc">Description:</label>
+				<div class="controls">
+					<input type="text" id="sessionDesc" placeholder="">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="sessionSpeaker">Speaker:</label>
+				<div class="controls">
+					<input type="text" id="sessionSpeaker" placeholder="">
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<label class="checkbox">
+						<input id="break-out-session" type="checkbox"> This is a break out session
+					</label>
+					<button class="btn" id="add-session" type="button">Add Session</button>
+				</div>
+			</div>
+			
+			
+			<!-- <div id="sessionId">
+				<label>Description: </label>
+				<input type="text" name="sessionDesc" id="sessionDesc"> <br>
+				<label>Speaker: </label>
+				<input type="text" name="speaker" id="sessionSpeaker"> <br>
+				<button class="btn" id="sessionSubmit" type="button">Add Session</button></div> -->
+		</div>
+		<style type="text/css" media="screen">
+		.event-session {
+			margin-top: 10px;
+			background-color: blue;
+		}
+		</style>
+		
+		<script type="text/template" id="session-template" charset="utf-8">
+			<div class="event-session">
+				<span class="session-desc"><%= desc %></span>
+				<span class="session-speaker"><%= speaker %></span>
+				<a href="#" class="add-subsession">+</a>
+			</div>
+		</script>
+		
+		<br />
+		
+		
+		
         <label>Start Time: </label> <input type = "text" name = "eventStart"><br>
         <label>End Time: </label> <input type = "text" name = "eventEnd"><br>
          <label>Contact Name: </label> <input type = "text" name = "eventContactName"><br>

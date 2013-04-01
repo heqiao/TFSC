@@ -4,12 +4,12 @@ $(document).ready(function(){
 	$( "#datepicker" ).datepicker();
 
 	//
-	$('#selectType').on('change', function(event){
-              var eventType = $(this).val();
-              console.log(eventType);
-              //Add sessions for a certain type of event
-              addSessions(eventType);
-            });
+    // $('#selectType').on('change', function(event){
+    //               var eventType = $(this).val();
+    //               console.log(eventType);
+    //               //Add sessions for a certain type of event
+    //               addSessions(eventType);
+    //             });
 	
 	function addSessions(eventType){
 		switch(eventType){
@@ -65,5 +65,24 @@ $(document).ready(function(){
 	};
 	
 });
+
+$(document).ready(function() {
+    $('#selectType').on('change', function(event) {
+        if ($(this).val() == "SYMPOSIUM") 
+        {
+            $('.event-section').slideDown();
+        };
+    });
+    
+    var temp = _.template( $('#session-template').html() );
+    $('#add-session').on('click', function(event) {
+        var html = temp({ 
+            desc: $('#sessionDesc').val(), 
+            speaker: $('#sessionSpeaker').val() 
+        });
+        $('.event-section').after(html);
+    });
+});
+
                  
                
