@@ -95,7 +95,8 @@ $(document).ready(function() {
             "click .add-subsession": "addSubSession"
         },
         initialize: function() {
-            this.el = this.template(this.options);
+            console.log(this.options);
+            this.$el.html(this.template(this.options));
         },
         addSubSession: function() {
             alert("aaa");
@@ -129,6 +130,7 @@ $(document).ready(function() {
                 desc: $('#sessionDesc').val(),
                 speaker: $('#sessionSpeaker').val()
             });
+            
             $('.event-section').after(sectionView.el);
         }
         

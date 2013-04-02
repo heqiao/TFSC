@@ -107,21 +107,21 @@ if($connection && isset($_POST['submitEvent']))
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Event Name:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="" required>
+					<input type="text" id="" placeholder="" required>
 				</div>
 			</div>
 			<!-- date -->
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Date:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			<!-- location -->
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Location:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			<!-- desc -->
@@ -182,45 +182,43 @@ if($connection && isset($_POST['submitEvent']))
 			</style>
 		
 			<script type="text/template" id="session-template" charset="utf-8">
-				<div class="event-session">
-					<span class="session-desc"><%= desc %></span>
-					<span class="session-speaker"><%= speaker %></span>
-					<a href="#" class="add-subsession">+</a>
-				</div>
+				<span class="session-desc"><%= desc %></span>
+				<span class="session-speaker"><%= speaker %></span>
+				<a href="#" class="add-subsession">+</a>
 			</script>
 			
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Start Time:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">End Time:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Contact Name:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Contact Email:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label" for="sessionDesc">Contact Phone:</label>
 				<div class="controls">
-					<input type="text" id="sessionDesc" placeholder="">
+					<input type="text" id="" placeholder="">
 				</div>
 			</div>
 			
