@@ -1,4 +1,4 @@
-<?php 
-  //Close the connection to the database   
-  mysql_close();
-?>
+		</div>
+	</div>
+</div>
+<?php mysql_close();
