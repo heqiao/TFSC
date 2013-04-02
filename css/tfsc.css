@@ -1,18 +1,18 @@
 #main-title {
-    margin-bottom: 0px !important;
+    margin-bottom: 0px ;
     text-align: center;
 }
 
-#eventDiv{
+/*#eventDiv{
     margin-left: 24%;
-    /*border:1px solid silver;*/
+    border:1px solid silver;
     border-radius: 6px;
 }
 #sessionId{
     margin-left: 10%;
-    /*border:1px solid silver;*/
+    border:1px solid silver;
     border-radius: 6px;
-}
+}*/
 input[type="search"]{
     position: relative;
     margin: 5px 20px;

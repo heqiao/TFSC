@@ -1,4 +1,4 @@
-<?php // include("connection.php"); ?>
+<?php  include("connection.php"); ?>
 <?php include("header.php");
 
 if($connection && isset($_POST['submitEvent']))
@@ -16,24 +16,19 @@ if($connection && isset($_POST['submitEvent']))
 	//Session Info
 	$sessionDesc = strip_tags(trim($_POST['sessionDesc']));
 	/*Validation for user input*/
-	if ($eventType == "select") {
-		$typeErro = "Event type is not selected.<br>";
-	}
-	if(strlen($eventName) == 0){
-		$nameErro = "Event name cannot be empty.<br>";
-	}
-	if (strlen($eventLoc) == 0) {
-		$locErro = "Event location cannot be empty.<br>";
-	}
-	if (strlen($datepicker) == 0) {
-		$dateErro = "Event date cannot be empty.";
-	}
-	if (
-		isset($typeErro) != true && 
-		isset($nameErro) != true && 
-		isset($locErro) != true && 
-		isset($dateErro) != true
-	)
+	 if ($eventType == "select") {
+	 	$typeErro = "Event type is not selected.<br>";
+	 }
+	// if(strlen($eventName) == 0){
+	// 	$nameErro = "Event name cannot be empty.<br>";
+	// }
+	// if (strlen($eventLoc) == 0) {
+	// 	$locErro = "Event location cannot be empty.<br>";
+	// }
+	// if (strlen($datepicker) == 0) {
+	// 	$dateErro = "Event date cannot be empty.";
+	// }
+	if (isset($typeErro) != true)
 	{
 		if ($eventType == 'SYMPOSIUM') 
 		{
@@ -42,7 +37,7 @@ if($connection && isset($_POST['submitEvent']))
 					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
 					`Contact_Phone`)
 					VALUES ('$eventName', '$datepicker', '$eventLoc', 
-					'$eventType', 'Description', '$eventStart', '$eventEnd', 
+					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
 					'$eventContactName', '$eventContactEmail', 
 					'$eventContactPhone');";
 			$sql2 = "INSERT INTO `tfscdb`.`session` (`Description`, `Event_ID`) 
@@ -68,17 +63,17 @@ if($connection && isset($_POST['submitEvent']))
 					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
 					`Contact_Phone`) 
 					VALUES ('$eventName', '$datepicker', '$eventLoc', 
-					'$eventType', 'Description', '$eventStart', '$eventEnd', 
+					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
 					'$eventContactName', '$eventContactEmail', '$eventContactPhone');";
 			$result = mysql_query($sql, $connection) or die ("Could not excute sql $sql");
 			$okmessage = "You have created an event successfully.";
 		}
-	}
+	 }
 }
 ?>
         <h1 id="main-title">Create an Event</h1><br>
 		
-		<?php if ($typeErro && $nameErro && $locErro && $dateErro && $okmessage) { ?>
+		<?php if ($okmessage) { ?>
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<strong>Successful!</strong>
@@ -86,18 +81,7 @@ if($connection && isset($_POST['submitEvent']))
 			if (isset($typeErro) == ture) {
 				echo $typeErro;
 			}
-			if (isset($nameErro) == ture) {
-				echo $nameErro;
-			}
-			if (isset($locErro) == ture) {
-				echo $locErro;
-			}
-			if (isset($dateErro) == ture) {
-				echo $dateErro;
-			}
-			if (isset($okmessage) == true) {
-				echo $okmessage;
-			}
+			
 			?>
 		</div>
 		<?php } ?>
@@ -105,28 +89,28 @@ if($connection && isset($_POST['submitEvent']))
 		<form id="main-form" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<!-- event name -->
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Event Name:</label>
+				<label class="control-label" for="eventName">Event Name:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="" required>
+					<input type="text" name = "eventName" id="eventName"  placeholder="" required>
 				</div>
 			</div>
 			<!-- date -->
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Date:</label>
+				<label class="control-label" for="datepicker">Date:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="datepicker" placeholder="">
 				</div>
 			</div>
 			<!-- location -->
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Location:</label>
+				<label class="control-label" for="eventLoc">Location:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="eventLoc" placeholder="">
 				</div>
 			</div>
 			<!-- desc -->
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Description:</label>
+				<label class="control-label" for="Description">Description:</label>
 				<div class="controls">
 					<textarea name="Description" rows="3"></textarea>
 				</div>
@@ -177,48 +161,51 @@ if($connection && isset($_POST['submitEvent']))
 			<style type="text/css" media="screen">
 				.event-session {
 					margin-top: 10px;
-					background-color: blue;
+					margin-bottom: 10px;
+					border:1px solid silver;
 				}
 			</style>
 		
 			<script type="text/template" id="session-template" charset="utf-8">
-				<span class="session-desc"><%= desc %></span>
-				<span class="session-speaker"><%= speaker %></span>
-				<a href="#" class="add-subsession">+</a>
+				<div class="event-session">
+					<span class="session-desc"><%= desc %></span>
+					<span class="session-speaker"><%= speaker %></span>
+					<a href="#" class="add-subsession">+</a>
+				</div>
 			</script>
 			
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Start Time:</label>
+				<label class="control-label" for="eventStart">Start Time:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="eventStart" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">End Time:</label>
+				<label class="control-label" for="eventEnd">End Time:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="eventEnd" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Contact Name:</label>
+				<label class="control-label" for="eventContactName">Contact Name:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="eventContactName" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Contact Email:</label>
+				<label class="control-label" for="eventContactEmail">Contact Email:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="eventContactEmail" placeholder="">
 				</div>
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Contact Phone:</label>
+				<label class="control-label" for="eventContactPhone">Contact Phone:</label>
 				<div class="controls">
-					<input type="text" id="" placeholder="">
+					<input type="text" id="eventContactPhone" placeholder="">
 				</div>
 			</div>
 			
