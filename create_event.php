@@ -41,7 +41,7 @@ if($connection && isset($_POST['submitEvent']))
 					'$eventContactName', '$eventContactEmail', 
 					'$eventContactPhone');";
 			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`) 
-					VALUES ('$sessionDesc', last_insert_id(), );";
+					VALUES ('$sessionDesc', last_insert_id(), 'ss');";
 			if (mysql_query('BEGIN')) {
 				if (mysql_query($sql1, $connection) && mysql_query($sql2, $connection))
 				{
@@ -140,7 +140,7 @@ if($connection && isset($_POST['submitEvent']))
 			</style>
 			<div class = "break-section">
 				<div class="control-group">
-					<label class="control-label" for="break-out">Breakout Session Number</label>
+					<label class="control-label" for="break-num">Breakout Session Number</label>
 					<div class="controls">
 						<select name = "break-num" id = "break-num" >
 							<option value="0">--Select One--</option>
@@ -167,7 +167,7 @@ if($connection && isset($_POST['submitEvent']))
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="break-out">Session Type:</label>
+					<label class="control-label" for="sessionType">Session Type:</label>
 					<div class="controls">
 						<select name = "sessionType" id = "sessionType" >
 							<option value="1">Individual</option>

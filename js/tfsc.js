@@ -156,6 +156,7 @@ $(document).ready(function() {
         selectType: function() {
             if ($('#selectType').val() == "SYMPOSIUM") 
             {
+
                 $('.break-section').slideDown();
                 $('.event-section').slideDown();
 
@@ -182,7 +183,7 @@ $(document).ready(function() {
 //             for (var i = 0; i < arr.length; i++) {
 //     $(".main-form").append('<span>' + array[i] + '</span>');
 // }
-//       }
+       }
         
     });
     
