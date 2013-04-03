@@ -40,8 +40,8 @@ if($connection && isset($_POST['submitEvent']))
 					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
 					'$eventContactName', '$eventContactEmail', 
 					'$eventContactPhone');";
-			$sql2 = "INSERT INTO `tfscdb`.`session` (`Description`, `Event_ID`) 
-					VALUES ('$sessionDesc', last_insert_id());";
+			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`) 
+					VALUES ('$sessionDesc', last_insert_id(), );";
 			if (mysql_query('BEGIN')) {
 				if (mysql_query($sql1, $connection) && mysql_query($sql2, $connection))
 				{
@@ -117,25 +117,42 @@ if($connection && isset($_POST['submitEvent']))
 			</div>
 			<!-- type -->
 			<div class="control-group">
-				<label class="control-label" for="sessionDesc">Event Type:</label>
+				<label class="control-label" for="selectType">Event Type:</label>
 				<div class="controls">
 					<select name="selectType" id="selectType"> 
 						<option value="select">--Select One--</option>
 						<option value="TA">Teaching Assistant Luncheon</option>
-						<option value="FACULTY">New Faculty Luncheon</option>
-						<option value="FACULTY">All Faculty Luncheon</option>
-						<option value="SYMPOSIUM">Teaching Symposium</option>
+						<option value="FACULTY">Luncheon</option>
+						<option value="SYMPOSIUM">Symposium</option>
 						<option value="RETREAT">Teaching Retreat</option>
 					</select>
 				</div>
 			</div>
 		
 			<style type="text/css" media="screen">
+				.break-section {
+					display: none;
+				}
 				.event-section {
 					display: none;
 				}
+
 			</style>
-			
+			<div class = "break-section">
+				<div class="control-group">
+					<label class="control-label" for="break-out">Breakout Session Number</label>
+					<div class="controls">
+						<select name = "break-num" id = "break-num" >
+							<option value="0">--Select One--</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
 			<div class="event-section">
 				<div class="control-group">
 					<label class="control-label" for="sessionDesc">Description:</label>
@@ -150,11 +167,15 @@ if($connection && isset($_POST['submitEvent']))
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="break-out">Session Type:</label>
 					<div class="controls">
-						<label class="checkbox">
-							<input id="break-out-session" type="checkbox"> This is a break out session
-						</label>
-						<button class="btn" id="add-session" type="button">Add Session</button>
+						<select name = "sessionType" id = "sessionType" >
+							<option value="1">Individual</option>
+						</select>
+					</div>
+					
+					<div class="controls">
+					<button class="btn" id="add-session" type="button">Add Session</button>
 					</div>
 				</div>
 			</div>
@@ -170,6 +191,7 @@ if($connection && isset($_POST['submitEvent']))
 				<div class="event-session">
 					<span class="session-desc"><%= desc %></span>
 					<span class="session-speaker"><%= speaker %></span>
+					<span class ="session-type"><%= type %></span>
 					<a href="#" class="add-subsession">+</a>
 				</div>
 			</script>
