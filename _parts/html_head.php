@@ -22,11 +22,6 @@
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 	
 	<!-- UofA style -->
-	<!-- 1140px Grid styles for IE -->
-	<!--[if lte IE 9]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" /><![endif]-->
-	<!-- The 1140px Grid - http://cssgrid.net/ -->
-	<link rel="stylesheet" href="http://www.uark.edu/inc/css/1140.css" type="text/css" media="screen" />
-	<!-- Your styles -->
 	<link rel="stylesheet" href="http://www.uark.edu/inc/css/1140Templates/default/styles.css" type="text/css" media="screen" />
 	<link href="http://tfsc.uark.edu/TFSCScreen.css" rel="stylesheet" type="text/css" media="screen" />
 	<link rel="stylesheet" href="http://www.uark.edu/inc/css/form.css" type="text/css" media="screen" />
