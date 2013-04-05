@@ -1,10 +1,18 @@
-<?php // include("connection.php"); ?>
-<?php include("_parts/html_head.php"); ?>
-<?php include("_parts/header.php"); ?>
+<?php
+include("_parts/functions.php");
+// include("_parts/connection.php");
+
+// HTML parts
+include("_parts/html_head.php");
+include("_parts/header.php");
+?>
 
 <div class="container">
 	<div class="row">
-		<?php include("_parts/sidebar.php"); ?>
+		<div class="span3">
+			<?php include("_parts/sidebar.php"); ?>
+		</div>
+		
 
 		<!-- Form to post data-->
 		<div class="span6 centerPlate">

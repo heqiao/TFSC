@@ -16,21 +16,9 @@
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	
-	<link rel="stylesheet" href="css/bootstrap.css" />
-	<link rel="stylesheet" href="css/bootstrap-responsive.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-	
-	<!-- UofA style -->
-	<link rel="stylesheet" href="http://www.uark.edu/inc/css/1140Templates/default/styles.css" type="text/css" media="screen" />
-	<link href="http://tfsc.uark.edu/TFSCScreen.css" rel="stylesheet" type="text/css" media="screen" />
-	<link rel="stylesheet" href="http://www.uark.edu/inc/css/form.css" type="text/css" media="screen" />
-	<link rel="stylesheet" media="all and (orientation:portrait)" href="http://www.uark.edu/inc/css/ensv/portrait.css">
-	<link rel="stylesheet" media="all and (orientation:landscape)" href="http://www.uark.edu/inc/css/ensv/landscape.css">
-	<link rel="stylesheet" href="http://www.uark.edu/inc/css/header.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="http://www.uark.edu/inc/css/footer.css" type="text/css" media="screen" />
-	<!-- Print CSS -->
-	<link rel="stylesheet" media="print" href="http://www.uark.edu/inc/css/ensv/print.css">
 	
 	<!-- Custom style -->
 	<link rel="stylesheet" href="css/tfsc.css" />

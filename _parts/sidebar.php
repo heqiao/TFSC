@@ -1,9 +1,6 @@
-<div class="span3">
-	<!--  Left Sidebar -->
-	<ul id="leftNav">            
-		<li><a href="create_event.php">Create Event</a></li>      
-		<li><a href="generate_report.php">Generate Reports</a></li>
-		<li><a href="#">RSVP System</a></li>       
-		<li><a href="#">Download Data</a></li> 
-	</ul>
-</div>
+<ul class="nav nav-tabs nav-stacked">
+	<li class="active"><a href="#">Create Event</a></li>
+	<li><a href="#">Generate Reports</a></li>
+	<li><a href="#">RSVP System</a></li>
+	<li><a href="#">Download Data</a></li>
+</ul>

@@ -29,16 +29,12 @@
 </div>
 
 
-<div class="UAbanner">
-	<div class="container">
-		<div class="row">
-			<a id="UALogo" href="http://www.uark.edu/" title="University of Arkansas">
-				<span class="hidden">University of Arkansas</span>
-			</a>
-			<div id="siteIdentifier"> 
-				<a id="topLevel" href="http://tfsc.uark.edu" class="siteIdentifierLinks" title="Event Evaluation Survey">Event Evaluation</a> 
-				<a id="secondLevel" href="http://tfsc.uark.edu" class="siteIdentifierLinks" title="Teaching and Faculty Support Center">Teaching and Faculty Support Center</a>
-			</div>
-		</div>
+<div class="banner-uark">
+	<a class="banner-uark-link-homepage" href="http://www.uark.edu/" title="University of Arkansas">
+		<span class="hidden">University of Arkansas</span>
+	</a>
+	<div class="site-identifier"> 
+		<h3>Event Evaluation</h3>
+		<h4>Teaching and Faculty Support Center</h4>
 	</div>
 </div>

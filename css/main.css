@@ -7,14 +7,12 @@
  */
 
 /* ==========================================================================
-   Chrome Frame prompt
+   Overall adjustment
    ========================================================================== */
 
 body {
 	margin-top: 40px;
 }
-
-
 
 /* ==========================================================================
    Chrome Frame prompt
@@ -30,4 +28,39 @@ body {
 .nav li a {
 	font-size: 14px;
 	padding: 10px 10px !important;
+}
+
+/* ==========================================================================
+   Header.php
+   ========================================================================== */
+
+.banner-uark {
+	background: #4D000A url(http://www.uark.edu/inc/css/banner.png) no-repeat;
+	min-height: 129px;
+}
+
+.banner-uark-link-homepage {
+	display: block;
+	height: 129px;
+	float: left;
+	width: 310px;
+}
+
+.site-identifier {
+	margin-left: 350px;
+	padding-top: 20px;
+}
+.site-identifier {
+	color: white;
+}
+.site-identifier {
+	
+}
+
+.top-level {
+	
+}
+
+.second-level {
+	
 }
