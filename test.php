@@ -6,32 +6,33 @@ include("_parts/functions.php");
 include("_parts/html_head.php");
 include("_parts/header.php");
 ?>
-
 <?php
-if(isset($connection) && isset($_POST['submitEvent']))
-{
-	$eventName         = strip_tags(trim($_POST['eventName']));
-	$datepicker        = strip_tags(trim($_POST['datepicker']));
-	$eventLoc          = strip_tags(trim($_POST['eventLoc']));
-	$eventDesc         = strip_tags(trim($_POST['Description']));
-	$eventType         = strip_tags(trim($_POST['selectType']));
-	$eventStart        = strip_tags(trim($_POST['eventStart']));
-	$eventEnd          = strip_tags(trim($_POST['eventEnd']));
-	$eventContactName  = strip_tags(trim($_POST['eventContactName']));
-	$eventContactEmail = strip_tags(trim($_POST['eventContactEmail']));
-	$eventContactPhone = strip_tags(trim($_POST['eventContactPhone']));
 
-	//Session Info
-	$sessionDesc = strip_tags(trim($_POST['sessionDesc']));
-	/*Validation for user input*/
-	 if ($eventType == "select") {
-	 	$typeErro = "Event type is not selected.<br>";
-	 }
-	if (isset($typeErro) != true)
-	{
-		if ($eventType == 'SYMPOSIUM') 
-		{
-			$sql1 = "INSERT INTO `tfscdb`.`event`
+class Event {
+
+	public $event_attr = Array();
+	public $id = NULL;
+
+	public function __construct($post, $connection){
+		$this->event_attr = PostParse($post);
+		// print_r($this->event_attr);
+		$this->insertEvent($this->event_attr);
+		
+	}
+	public function insertEvent($attr){
+		global $connection;
+		$eventName         = strip_tags(trim($attr["eventName"]));
+		$datepicker        = strip_tags(trim($attr["datepicker"]));
+		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
+		$eventDesc         = strip_tags(trim($attr["Description"]));
+		$eventType         = strip_tags(trim($attr["selectType"]));
+		$eventStart        = strip_tags(trim($attr["eventStart"]));
+		$eventEnd          = strip_tags(trim($attr["eventEnd"]));
+		$eventContactName  = strip_tags(trim($attr["eventContactName"]));
+		$eventContactEmail = strip_tags(trim($attr["eventContactEmail"]));
+		$eventContactPhone = strip_tags(trim($attr["eventContactPhone"]));
+
+		$sql1 = "INSERT INTO `tfscdb`.`event`
 					(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
 					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
 					`Contact_Phone`)
@@ -39,36 +40,42 @@ if(isset($connection) && isset($_POST['submitEvent']))
 					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
 					'$eventContactName', '$eventContactEmail', 
 					'$eventContactPhone');";
-			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`) 
-					VALUES ('$sessionDesc', last_insert_id(), 'ss');";
-			if (mysql_query('BEGIN')) {
-				if (mysql_query($sql1, $connection) && mysql_query($sql2, $connection))
-				{
-					mysql_query('COMMIT');
-					$okmessage = "You have created an event successfully.";
-				} // both queries looked OK, save
-				else
-				{
-					mysql_query('ROLLBACK'); 
-					// problems with queries, no changes
-					$okmessage = "Event creating failed";
-				}
-			}
+		$result = mysql_query($sql1, $connection) or die ("Could not excute sql $sql1");
+		$this->id = mysql_insert_id($connection);
+	}
+	public function insertSession($sessions){
+		global $connection;
+
+		foreach ($sessions as $key => $session) {
+			
+			$sessionDesc = strip_tags(trim($sessions["sessionDesc"]));
+			
+	echo '<pre>';
+	print_r($this->id);
+	echo '</pre>';
+			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`, `Order`) 
+					VALUES ('$sessionDesc', '$this->id', 'example group', '1');";
+	echo '<pre>';
+	print_r($sql2);
+	echo '</pre>';
+					
+			$result = mysql_query($sql2, $connection) or die ("Could not excute sql $sql2");
 		}
-		else
-		{
-			$sql = "INSERT INTO `tfscdb`.`event` 
-					(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
-					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
-					`Contact_Phone`) 
-					VALUES ('$eventName', '$datepicker', '$eventLoc', 
-					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
-					'$eventContactName', '$eventContactEmail', '$eventContactPhone');";
-			$result = mysql_query($sql, $connection) or die ("Could not excute sql $sql");
-			$okmessage = "You have created an event successfully.";
-		}
-	 }
+	}
+
 }
+if(isset($connection) && isset($_POST['submitEvent']))
+{
+	$event = new Event($_POST, $connection);
+	// echo '<pre>';
+	// print_r($event->event_attr);
+	// echo '</pre>';
+	$event->insertSession($event->event_attr['session']);
+	
+	//$event->insertSession($event->event_attr);
+}
+
+
 ?>
 
 <div class="container">
@@ -169,19 +176,19 @@ if(isset($connection) && isset($_POST['submitEvent']))
 					<div class="control-group">
 						<label class="control-label" for="sessionDesc">Description:</label>
 						<div class="controls">
-							<input type="text" id="sessionDesc" placeholder="">
+							<input type="text" name = "(session)sessionDesc" id="sessionDesc" placeholder="">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="sessionSpeaker">Speaker:</label>
 						<div class="controls">
-							<input type="text" id="sessionSpeaker" placeholder="">
+							<input type="text" name = "(session)sessionSpeaker" id="sessionSpeaker" placeholder="">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="sessionType">Session Type:</label>
 						<div class="controls">
-							<select name = "sessionType" id = "sessionType" >
+							<select name = "(session)sessionType" id = "sessionType" >
 								<option value="1">Individual</option>
 							</select>
 						</div>
@@ -255,5 +262,3 @@ if(isset($connection) && isset($_POST['submitEvent']))
 		</div>
 	</div>
 </div>
-
-<?php include("_parts/html_foot.php");
