@@ -1,10 +1,10 @@
 <?php
-include("_parts/functions.php");
-include("_parts/connection.php");
+require_once "_parts/functions.php";
+require_once "_parts/db_settings.php";
 
 // HTML parts
-include("_parts/html_head.php");
-include("_parts/header.php");
+require_once "_parts/html_head.php";
+require_once "_parts/header.php";
 ?>
 
 <div class="container">
@@ -23,4 +23,4 @@ include("_parts/header.php");
 	</div>
 </div>
 
-<?php include("_parts/html_foot.php");
+<?php require_once "_parts/html_foot.php";

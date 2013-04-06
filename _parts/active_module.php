@@ -1,46 +1,4 @@
-<pre>
 <?php
-class DBScheme {
-	// DB structure
-	public static $db_name = "tfscdb";
-	public static $tables = array(
-		"event" => array(
-			"name", 
-			"date", 
-			"location", 
-			"event_type", 
-			"description", 
-			"start_time",
-			"end_time",
-			"contact_name",
-			"contact_email",
-			"contact_phone"
-		),
-		"session" => array(
-			"event_id",
-			"title",
-			"group_name"
-		),
-		"session_speaker" => array(
-			"speaker_id",
-			"session_id"
-		),
-		"speaker" => array(
-			"first_name",
-			"last_name",
-			"prefix",
-			"title",
-			"department",
-			"organization"
-		)
-	);
-	// db connection
-	public static $con;
-}
-DBScheme::$con = mysql_connect("localhost","root", "123");
-mysql_select_db(DBScheme::$db_name, DBScheme::$con) or die("No db!!!");
-
-
 class ActiveModule {
 	// Module attr
 	private $id;
@@ -159,14 +117,6 @@ class ActiveModule {
 	}
 }
 
-class Event extends ActiveModule {
-	public $has_many = array('session');
-}
-
-class Session extends ActiveModule {
-	public $belongs_to = array('event');
-}
-
 
 
 
@@ -188,16 +138,3 @@ class Session extends ActiveModule {
 // print_r($event->get_id());
 // print_r($event->session);
 // print_r($session->get_id());
-
-$event = new Event();
-$event->find_by_id(1);
-$evls = $event->eveluation;
-foreach ($evls as $key => $evl) {
-	$qs = $evl->question
-}
-foreach ($qs as $key => $q) {
-	$q->attributes['description']
-}
-
-?>
-</pre>
