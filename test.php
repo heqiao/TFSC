@@ -116,9 +116,12 @@ if(isset($connection) && isset($_POST['submitEvent']))
 							</div>
 							<!-- Right part of the form -->
 							<div class = "span6">
-								<div class="controls">
+								<div class="add-session-control">
 									<button class="btn" id="new-session" type="button">Add Session</button>
 									<button class="btn" id="new-breakout" type="button">Add Breakout Session</button>
+								</div>
+								<div class="event-section">
+									
 								</div>
 							</div>
 							<!--  -->

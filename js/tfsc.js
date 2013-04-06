@@ -125,17 +125,19 @@ $(document).ready(function() {
             "click #create-speaker":"createSpeaker"
         },
         newSession:function(){
+            console.log("newsession");
+            var session_num = 1;
             var sectionView = new SectionView({
                 
-                // session_num: session_num,
-                // type: $('#sessionType option:selected').text(),
-                // desc: $('#sessionDesc').val(),
-                // speaker: $('#sessionSpeaker').val()
-                // desc: null,
-                // speaker: null
+                session_num: session_num,
+                type: $('#sessionType option:selected').text(),
+                desc: $('#sessionDesc').val(),
+                speaker: $('#sessionSpeaker').val(),
+                desc: null,
+                speaker: null
             });
             
-             console.log("newsession");
+            console.log(sectionView.el);
             $('.event-section').after(sectionView.el);
         },
 
