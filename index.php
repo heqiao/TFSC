@@ -1,6 +1,6 @@
 <?php
 include("_parts/functions.php");
-// include("_parts/connection.php");
+include("_parts/connection.php");
 
 // HTML parts
 include("_parts/html_head.php");

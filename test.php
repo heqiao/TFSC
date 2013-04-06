@@ -6,19 +6,74 @@ include("_parts/functions.php");
 include("_parts/html_head.php");
 include("_parts/header.php");
 ?>
-
 <?php
+
+// class Event {
+
+// 	public $event_attr = Array();
+// 	public $id = NULL;
+
+// 	public function __construct($post, $connection){
+// 		$this->event_attr = PostParse($post);
+// 		// print_r($this->event_attr);
+// 		$this->insertEvent($this->event_attr);
+		
+// 	}
+// 	public function insertEvent($attr){
+// 		global $connection;
+// 		$eventName         = strip_tags(trim($attr["eventName"]));
+// 		$datepicker        = strip_tags(trim($attr["datepicker"]));
+// 		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
+// 		$eventDesc         = strip_tags(trim($attr["Description"]));
+// 		$eventType         = strip_tags(trim($attr["selectType"]));
+// 		$eventStart        = strip_tags(trim($attr["eventStart"]));
+// 		$eventEnd          = strip_tags(trim($attr["eventEnd"]));
+// 		$eventContactName  = strip_tags(trim($attr["eventContactName"]));
+// 		$eventContactEmail = strip_tags(trim($attr["eventContactEmail"]));
+// 		$eventContactPhone = strip_tags(trim($attr["eventContactPhone"]));
+
+// 		$sql1 = "INSERT INTO `tfscdb`.`event`
+// 					(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
+// 					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
+// 					`Contact_Phone`)
+// 					VALUES ('$eventName', '$datepicker', '$eventLoc', 
+// 					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
+// 					'$eventContactName', '$eventContactEmail', 
+// 					'$eventContactPhone');";
+// 		$result = mysql_query($sql1, $connection) or die ("Could not excute sql $sql1");
+// 		$this->id = mysql_insert_id($connection);
+// 	}
+// 	public function insertSession($sessions){
+// 		global $connection;
+
+// 		foreach ($sessions as $key => $session) {
+			
+// 			$sessionDesc = strip_tags(trim($sessions["sessionDesc"]));
+			
+// 	echo '<pre>';
+// 	print_r($this->id);
+// 	echo '</pre>';
+// 			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`, `Order`) 
+// 					VALUES ('$sessionDesc', '$this->id', 'example group', '1');";
+// 	echo '<pre>';
+// 	print_r($sql2);
+// 	echo '</pre>';
+					
+// 			$result = mysql_query($sql2, $connection) or die ("Could not excute sql $sql2");
+// 		}
+// 	}
+
+// }
 if(isset($connection) && isset($_POST['submitEvent']))
 {
-	//insert a new event
-	$event     = new Event($_POST);
-	$eventType = strip_tags(trim($_POST['selectType']));
-	//insert sessions for symposium
-	if ($eventType =='SYMPOSIUM') {
-		$event->insertSession($event->event_attr['session']);
-	}
-
+	$event = new Event($_POST, $connection);
+	// echo '<pre>';
+	// print_r($event->event_attr);
+	// echo '</pre>';
+	$event->insertSession($event->event_attr['session']);
 }
+
+
 ?>
 
 <div class="container">
@@ -77,6 +132,87 @@ if(isset($connection) && isset($_POST['submitEvent']))
 						<textarea name="Description" rows="3"></textarea>
 					</div>
 				</div>
+				<!-- type -->
+				<div class="control-group">
+					<label class="control-label" for="selectType">Event Type:</label>
+					<div class="controls">
+						<select name="selectType" id="selectType"> 
+							<option value="select">--Select One--</option>
+							<option value="TA">Teaching Assistant Luncheon</option>
+							<option value="FACULTY">Luncheon</option>
+							<option value="SYMPOSIUM">Symposium</option>
+							<option value="RETREAT">Teaching Retreat</option>
+						</select>
+					</div>
+				</div>
+		
+				<style type="text/css" media="screen">
+					.break-section {
+						display: none;
+					}
+					.event-section {
+						display: none;
+					}
+
+				</style>
+				<div class = "break-section">
+					<div class="control-group">
+						<label class="control-label" for="break-num">Breakout Session Number</label>
+						<div class="controls">
+							<select name = "break-num" id = "break-num" >
+								<option value="0">--Select One--</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="event-section">
+					<div class="control-group">
+						<label class="control-label" for="sessionDesc">Description:</label>
+						<div class="controls">
+							<input type="text" name = "(session)sessionDesc" id="sessionDesc" placeholder="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="sessionSpeaker">Speaker:</label>
+						<div class="controls">
+							<input type="text" name = "(session)sessionSpeaker" id="sessionSpeaker" placeholder="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="sessionType">Session Type:</label>
+						<div class="controls">
+							<select name = "(session)sessionType" id = "sessionType" >
+								<option value="1">Individual</option>
+							</select>
+						</div>
+					
+						<div class="controls">
+						<button class="btn" id="add-session" type="button">Add Session</button>
+						</div>
+					</div>
+				</div>
+				<style type="text/css" media="screen">
+					.event-session {
+						margin-top: 10px;
+						margin-bottom: 10px;
+						border:1px solid silver;
+					}
+				</style>
+		
+				<script type="text/template" id="session-template" charset="utf-8">
+					<div class="event-session">
+						<span class="session-desc"><%= desc %></span>
+						<span class="session-speaker"><%= speaker %></span>
+						<span class ="session-type"><%= type %></span>
+						<a href="#" class="add-subsession">+</a>
+					</div>
+				</script>
+			
 				<div class="control-group">
 					<label class="control-label" for="eventStart">Start Time:</label>
 					<div class="controls">
@@ -111,137 +247,6 @@ if(isset($connection) && isset($_POST['submitEvent']))
 						<input type="text" id="eventContactPhone" placeholder="">
 					</div>
 				</div>
-				<!-- type -->
-				<div class="control-group">
-					<label class="control-label" for="selectType">Event Type:</label>
-					<div class="controls">
-						<select name="selectType" id="selectType"> 
-							<option value="select">--Select One--</option>
-							<option value="TA">Teaching Assistant Luncheon</option>
-							<option value="FACULTY">Luncheon</option>
-							<option value="SYMPOSIUM">Symposium</option>
-							<option value="RETREAT">Teaching Retreat</option>
-						</select>
-					</div>
-				</div>
-		
-				<style type="text/css" media="screen">
-					.break-section {
-						display: none;
-					}
-					.event-section {
-						display: none;
-					}
-					.speaker-section{
-						display: none;
-					}
-				</style>
-				<div class = "break-section">
-					<div class="control-group">
-						<label class="control-label" for="break-num">Breakout Session Number</label>
-						<div class="controls">
-							<select name = "break-num" id = "break-num" >
-								<option value="0">--Select One--</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<div class="event-section">
-					<div class="control-group">
-						<label class="control-label" for="sessionDesc">Description:</label>
-						<div class="controls">
-							<input type="text" name = "sessionDesc" id="sessionDesc" placeholder="">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="sessionSpeaker">Speaker:</label>
-						<div class="controls">
-							<input type="text" name = "sessionSpeaker" class = "typeahead" id="sessionSpeaker" >
-
-							<button id="add-speaker" type = "button"></button>
-							<button class="btn" id="create-speaker" type="button">Create Speaker</button>
-
-						</div>
-					</div>
-					<div class="speaker-section">
-						<div class="control-group">
-							<label class="control-label" for="speaker-first">First Name:</label>
-							<div class="controls">
-								<input type="text" name = "speaker-first" id="speaker-first" placeholder="">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="speaker-last">Last Name:</label>
-							<div class="controls">
-								<input type="text" name = "speaker-last" id="speaker-last" placeholder="">
-							</div>
-						</div>
-						
-						<div class="control-group">
-							<label class="control-label" for="speaker-prefix">Prefix:</label>
-							<div class="controls">
-								<input type="text" name = "speaker-prefix" id="speaker-prefix" placeholder="">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="speaker-title">Title:</label>
-							<div class="controls">
-								<input type="text" name = "speaker-title" id="speaker-title" placeholder="">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="speaker-dept">Department:</label>
-							<div class="controls">
-								<input type="text" name = "speaker-dept" id="speaker-dept" placeholder="">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="speaker-org">Organization:</label>
-							<div class="controls">
-								<input type="text" name = "speaker-org" id="speaker-org" placeholder="">
-							</div>
-						</div>
-					</div>
-					
-
-					<div class="control-group">
-						<label class="control-label" for="sessionType">Session Type:</label>
-						<div class="controls">
-							<select name = "sessionType" id = "sessionType" >
-								<option value="1">Individual</option>
-							</select>
-						</div>
-					
-						<div class="controls">
-						<button class="btn" id="add-session" type="button">Add Session</button>
-						</div>
-					</div>
-				</div>
-				<style type="text/css" media="screen">
-					.event-session {
-						margin-top: 10px;
-						margin-bottom: 10px;
-						border:1px solid silver;
-					}
-				</style>
-		
-				<script type="text/template" id="session-template" charset="utf-8">
-					<div class="event-session">
-						<input type='hidden' name='(session)(session_<%= session_num %>)session_desc' value='<%= desc %>' />
-						<input type='hidden' name='(session)(session_<%= session_num %>)session_type' value='<%= type %>' />
-						<span class="session-desc"><%= desc %></span>
-						<span class="session-speaker"><%= speaker %></span>
-						<span class ="session-type"><%= type %></span>
-						<a href="#" class="add-subsession">+</a>
-					</div>
-				</script>
-			
-				
 			
 				<div class="control-group">
 					<div class="controls">
@@ -255,5 +260,3 @@ if(isset($connection) && isset($_POST['submitEvent']))
 		</div>
 	</div>
 </div>
-
-<?php include("_parts/html_foot.php");
