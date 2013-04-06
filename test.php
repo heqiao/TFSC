@@ -8,62 +8,62 @@ include("_parts/header.php");
 ?>
 <?php
 
-class Event {
+// class Event {
 
-	public $event_attr = Array();
-	public $id = NULL;
+// 	public $event_attr = Array();
+// 	public $id = NULL;
 
-	public function __construct($post, $connection){
-		$this->event_attr = PostParse($post);
-		// print_r($this->event_attr);
-		$this->insertEvent($this->event_attr);
+// 	public function __construct($post, $connection){
+// 		$this->event_attr = PostParse($post);
+// 		// print_r($this->event_attr);
+// 		$this->insertEvent($this->event_attr);
 		
-	}
-	public function insertEvent($attr){
-		global $connection;
-		$eventName         = strip_tags(trim($attr["eventName"]));
-		$datepicker        = strip_tags(trim($attr["datepicker"]));
-		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
-		$eventDesc         = strip_tags(trim($attr["Description"]));
-		$eventType         = strip_tags(trim($attr["selectType"]));
-		$eventStart        = strip_tags(trim($attr["eventStart"]));
-		$eventEnd          = strip_tags(trim($attr["eventEnd"]));
-		$eventContactName  = strip_tags(trim($attr["eventContactName"]));
-		$eventContactEmail = strip_tags(trim($attr["eventContactEmail"]));
-		$eventContactPhone = strip_tags(trim($attr["eventContactPhone"]));
+// 	}
+// 	public function insertEvent($attr){
+// 		global $connection;
+// 		$eventName         = strip_tags(trim($attr["eventName"]));
+// 		$datepicker        = strip_tags(trim($attr["datepicker"]));
+// 		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
+// 		$eventDesc         = strip_tags(trim($attr["Description"]));
+// 		$eventType         = strip_tags(trim($attr["selectType"]));
+// 		$eventStart        = strip_tags(trim($attr["eventStart"]));
+// 		$eventEnd          = strip_tags(trim($attr["eventEnd"]));
+// 		$eventContactName  = strip_tags(trim($attr["eventContactName"]));
+// 		$eventContactEmail = strip_tags(trim($attr["eventContactEmail"]));
+// 		$eventContactPhone = strip_tags(trim($attr["eventContactPhone"]));
 
-		$sql1 = "INSERT INTO `tfscdb`.`event`
-					(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
-					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
-					`Contact_Phone`)
-					VALUES ('$eventName', '$datepicker', '$eventLoc', 
-					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
-					'$eventContactName', '$eventContactEmail', 
-					'$eventContactPhone');";
-		$result = mysql_query($sql1, $connection) or die ("Could not excute sql $sql1");
-		$this->id = mysql_insert_id($connection);
-	}
-	public function insertSession($sessions){
-		global $connection;
+// 		$sql1 = "INSERT INTO `tfscdb`.`event`
+// 					(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
+// 					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
+// 					`Contact_Phone`)
+// 					VALUES ('$eventName', '$datepicker', '$eventLoc', 
+// 					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
+// 					'$eventContactName', '$eventContactEmail', 
+// 					'$eventContactPhone');";
+// 		$result = mysql_query($sql1, $connection) or die ("Could not excute sql $sql1");
+// 		$this->id = mysql_insert_id($connection);
+// 	}
+// 	public function insertSession($sessions){
+// 		global $connection;
 
-		foreach ($sessions as $key => $session) {
+// 		foreach ($sessions as $key => $session) {
 			
-			$sessionDesc = strip_tags(trim($sessions["sessionDesc"]));
+// 			$sessionDesc = strip_tags(trim($sessions["sessionDesc"]));
 			
-	echo '<pre>';
-	print_r($this->id);
-	echo '</pre>';
-			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`, `Order`) 
-					VALUES ('$sessionDesc', '$this->id', 'example group', '1');";
-	echo '<pre>';
-	print_r($sql2);
-	echo '</pre>';
+// 	echo '<pre>';
+// 	print_r($this->id);
+// 	echo '</pre>';
+// 			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`, `Order`) 
+// 					VALUES ('$sessionDesc', '$this->id', 'example group', '1');";
+// 	echo '<pre>';
+// 	print_r($sql2);
+// 	echo '</pre>';
 					
-			$result = mysql_query($sql2, $connection) or die ("Could not excute sql $sql2");
-		}
-	}
+// 			$result = mysql_query($sql2, $connection) or die ("Could not excute sql $sql2");
+// 		}
+// 	}
 
-}
+// }
 if(isset($connection) && isset($_POST['submitEvent']))
 {
 	$event = new Event($_POST, $connection);
@@ -71,8 +71,6 @@ if(isset($connection) && isset($_POST['submitEvent']))
 	// print_r($event->event_attr);
 	// echo '</pre>';
 	$event->insertSession($event->event_attr['session']);
-	
-	//$event->insertSession($event->event_attr);
 }
 
 
