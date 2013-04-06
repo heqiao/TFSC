@@ -10,71 +10,13 @@ include("_parts/header.php");
 <?php
 if(isset($connection) && isset($_POST['submitEvent']))
 {
-	
-	$event = new Event($_POST, $connection);
-	$eventType         = strip_tags(trim($_POST['selectType']));
+	//insert a new event
+	$event     = new Event($_POST);
+	$eventType = strip_tags(trim($_POST['selectType']));
+	//insert sessions for symposium
 	if ($eventType =='SYMPOSIUM') {
 		$event->insertSession($event->event_attr['session']);
 	}
-	
-	// $eventName         = strip_tags(trim($_POST['eventName']));
-	// $datepicker        = strip_tags(trim($_POST['datepicker']));
-	// $eventLoc          = strip_tags(trim($_POST['eventLoc']));
-	// $eventDesc         = strip_tags(trim($_POST['Description']));
-	// $eventType         = strip_tags(trim($_POST['selectType']));
-	// $eventStart        = strip_tags(trim($_POST['eventStart']));
-	// $eventEnd          = strip_tags(trim($_POST['eventEnd']));
-	// $eventContactName  = strip_tags(trim($_POST['eventContactName']));
-	// $eventContactEmail = strip_tags(trim($_POST['eventContactEmail']));
-	// $eventContactPhone = strip_tags(trim($_POST['eventContactPhone']));
-
-	// //Session Info
-	// $sessionDesc = strip_tags(trim($_POST['sessionDesc']));
-	// /*Validation for user input*/
-	//  if ($eventType == "select") {
-	//  	$typeErro = "Event type is not selected.<br>";
-	//  }
-	// if (isset($typeErro) != true)
-	// {
-	// 	if ($eventType == 'SYMPOSIUM') 
-	// 	{
-	// 		$sql1 = "INSERT INTO `tfscdb`.`event`
-	// 				(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
-	// 				`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
-	// 				`Contact_Phone`)
-	// 				VALUES ('$eventName', '$datepicker', '$eventLoc', 
-	// 				'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
-	// 				'$eventContactName', '$eventContactEmail', 
-	// 				'$eventContactPhone');";
-	// 		$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`) 
-	// 				VALUES ('$sessionDesc', last_insert_id(), 'ss');";
-	// 		if (mysql_query('BEGIN')) {
-	// 			if (mysql_query($sql1, $connection) && mysql_query($sql2, $connection))
-	// 			{
-	// 				mysql_query('COMMIT');
-	// 				$okmessage = "You have created an event successfully.";
-	// 			} // both queries looked OK, save
-	// 			else
-	// 			{
-	// 				mysql_query('ROLLBACK'); 
-	// 				// problems with queries, no changes
-	// 				$okmessage = "Event creating failed";
-	// 			}
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		$sql = "INSERT INTO `tfscdb`.`event` 
-	// 				(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
-	// 				`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
-	// 				`Contact_Phone`) 
-	// 				VALUES ('$eventName', '$datepicker', '$eventLoc', 
-	// 				'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
-	// 				'$eventContactName', '$eventContactEmail', '$eventContactPhone');";
-	// 		$result = mysql_query($sql, $connection) or die ("Could not excute sql $sql");
-	// 		$okmessage = "You have created an event successfully.";
-	// 	}
-	//  }
 
 }
 ?>

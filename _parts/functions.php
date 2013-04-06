@@ -5,7 +5,7 @@ class Event {
 	public $event_attr = Array();
 	public $id = NULL;
 
-	public function __construct($post, $connection){
+	public function __construct($post){
 		$this->event_attr = PostParse($post);
 		
 	// echo '<pre>';
@@ -15,7 +15,7 @@ class Event {
 		
 	}
 	public function insertEvent($attr){
-		global $connection;
+		//global $connection;
 		$eventName         = strip_tags(trim($attr["eventName"]));
 		$datepicker        = strip_tags(trim($attr["datepicker"]));
 		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
@@ -35,11 +35,11 @@ class Event {
 					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
 					'$eventContactName', '$eventContactEmail', 
 					'$eventContactPhone');";
-		$result = mysql_query($sql1, $connection) or die ("Could not excute sql $sql1");
-		$this->id = mysql_insert_id($connection);
+		$result = mysql_query($sql1) or die ("Could not excute sql $sql1");
+		$this->id = mysql_insert_id();
 	}
 	public function insertSession($sessions){
-		global $connection;
+		//global $connection;
 
 		foreach ($sessions as $key => $session) {
 
@@ -58,10 +58,10 @@ class Event {
 	// print_r($sql2);
 	// echo '</pre>';
 					
-			$result = mysql_query($sql2, $connection) or die ("Could not excute sql $sql2");
+			$result = mysql_query($sql2) or die ("Could not excute sql $sql2");
 			if (mysql_query('BEGIN')) {
 				// Both of the queries work. Commit
-				if (mysql_query($sql1, $connection) && mysql_query($sql2, $connection))
+				if (mysql_query($sql1) && mysql_query($sql2))
 				{
 					mysql_query('COMMIT');
 				} 

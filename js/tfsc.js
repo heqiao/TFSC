@@ -1,7 +1,7 @@
 // 
 $(document).ready(function(){
     //Display the date picker
-    $( "#datepicker" ).datepicker();
+    $('#datepicker').datepicker({dateFormat: 'yy-mm-dd'});
     //let the user choose the speaker
     var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
     $('.typeahead').typeahead({
@@ -125,17 +125,7 @@ $(document).ready(function() {
         
         breakNum: function(){
              var breakVal = $("#break-num").val();
-            // switch(breakVal){
-            //     case '1':
-            //     $('#sessionType').append('<option value="2">Breakout Session 1</option>');
-            //     break;
-            //     case '2';
-            //     break;
-            //     case '3';
-            //     break;
-            //     case '4';
-            //     break;
-            // }
+            
             if (breakVal == 1) {
                 $('#sessionType').html('<option value="1">Individual</option> <option value="2">Breakout Session 1</option>');
             }
@@ -189,17 +179,7 @@ $(document).ready(function() {
             
              
             $('.event-section').after(sectionView.el);
-             session_num++;
-            // var session_name = "(session)sessionDesc_".concat(session_num);
-            // // var name = $('#sessionDesc').attr('name'); // accesses name attribute
-            // $('#sessionDesc').attr('name', session_name); // changes/adds name
-            // $('#sessionDesc').removeAttr('name'); 
-            // $('#sessionDesc').hide();
-            // $('#sessionDesc').after('<input type="text" name ='+
-            //         +session_name
-            //         +' id="sessionDesc" placeholder="">');
-            // alert(session_name);
-            
+             session_num++;            
        },
        createSpeaker:function(){
         $('.speaker-section').slideDown();
