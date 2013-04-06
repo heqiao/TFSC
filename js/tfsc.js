@@ -73,7 +73,7 @@ $(document).ready(function(){
 
 $(document).ready(function() {
     // datepicker
-    $( "#datepicker" ).datepicker();
+    $('#datepicker').datepicker({dateFormat: 'yy-mm-dd'});
     
     // $('#selectType').on('change', function(event) {
     //     if ($(this).val() == "SYMPOSIUM") 
@@ -95,12 +95,13 @@ $(document).ready(function() {
         
         tagName: "div",
         className: 'event-session',
-        template: _.template($('#session-template').html()),
+       
+        template: _.template($('#session-template-symp').html()), //changed to symposiummmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
         events: {
             "click .add-subsession": "addSubSession"
         },
         initialize: function() {
-            console.log(this.options);
+            // console.log(this.options);
             this.$el.html(this.template(this.options));
         },
         addSubSession: function() {
@@ -108,21 +109,36 @@ $(document).ready(function() {
         }
     });
 
-     var session_num = 1;
+    // var session_num = 1;
 
     var FormView = Backbone.View.extend({
         
         // HTML
-        el: $('#main-form'),
+        el: $('#main-form-symposium'),//changed to sympsiummmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
         
         // Event
         events: {
+            "click #new-session": "newSession",
             "change #selectType": "selectType",
             "click #add-session": "addSection",
             "change #break-num" : "breakNum",
             "click #create-speaker":"createSpeaker"
         },
-        
+        newSession:function(){
+            var sectionView = new SectionView({
+                
+                // session_num: session_num,
+                // type: $('#sessionType option:selected').text(),
+                // desc: $('#sessionDesc').val(),
+                // speaker: $('#sessionSpeaker').val()
+                // desc: null,
+                // speaker: null
+            });
+            
+             console.log("newsession");
+            $('.event-section').after(sectionView.el);
+        },
+
         breakNum: function(){
              var breakVal = $("#break-num").val();
             
@@ -169,18 +185,18 @@ $(document).ready(function() {
             };
         },
         
-        addSection: function() {
-            var sectionView = new SectionView({
-                desc: $('#sessionDesc').val(),
-                speaker: $('#sessionSpeaker').val(),
-                session_num: session_num,
-                type: $('#sessionType option:selected').text()
-            });
+       //  addSection: function() {
+       //      var sectionView = new SectionView({
+       //          desc: $('#sessionDesc').val(),
+       //          speaker: $('#sessionSpeaker').val(),
+       //          session_num: session_num,
+       //          type: $('#sessionType option:selected').text()
+       //      });
             
              
-            $('.event-section').after(sectionView.el);
-             session_num++;            
-       },
+       //      $('.event-section').after(sectionView.el);
+       //       session_num++;            
+       // },
        createSpeaker:function(){
         $('.speaker-section').slideDown();
        }
@@ -188,6 +204,7 @@ $(document).ready(function() {
     });
     
     var form_view = new FormView();
+    console.log(form_view.events);
     
 });
 

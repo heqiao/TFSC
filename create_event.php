@@ -223,22 +223,22 @@ if(isset($connection) && isset($_POST['submitEvent']))
 					</div>
 				</div>
 				<style type="text/css" media="screen">
-					.event-session {
+					/*.event-session {
 						margin-top: 10px;
 						margin-bottom: 10px;
 						border:1px solid silver;
-					}
+					}*/
 				</style>
 		
 				<script type="text/template" id="session-template" charset="utf-8">
-					<div class="event-session">
-						<input type='hidden' name='(session)(session_<%= session_num %>)session_desc' value='<%= desc %>' />
-						<input type='hidden' name='(session)(session_<%= session_num %>)session_type' value='<%= type %>' />
-						<span class="session-desc"><%= desc %></span>
-						<span class="session-speaker"><%= speaker %></span>
-						<span class ="session-type"><%= type %></span>
-						<a href="#" class="add-subsession">+</a>
-					</div>
+					// <div class="event-session">
+					// 	<input type='hidden' name='(session)(session_<%= session_num %>)session_desc' value='<%= desc %>' />
+					// 	<input type='hidden' name='(session)(session_<%= session_num %>)session_type' value='<%= type %>' />
+					// 	<span class="session-desc"><%= desc %></span>
+					// 	<span class="session-speaker"><%= speaker %></span>
+					// 	<span class ="session-type"><%= type %></span>
+					// 	<a href="#" class="add-subsession">+</a>
+					// </div>
 				</script>
 			
 				

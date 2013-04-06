@@ -15,7 +15,6 @@ class Event {
 		
 	}
 	public function insertEvent($attr){
-		//global $connection;
 		$eventName         = strip_tags(trim($attr["eventName"]));
 		$datepicker        = strip_tags(trim($attr["datepicker"]));
 		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
@@ -39,7 +38,6 @@ class Event {
 		$this->id = mysql_insert_id();
 	}
 	public function insertSession($sessions){
-		//global $connection;
 
 		foreach ($sessions as $key => $session) {
 

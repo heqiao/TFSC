@@ -15,7 +15,7 @@ include("_parts/header.php");
 		
 
 		<!-- Form to post data-->
-		<div class="span6 centerPlate">
+		<div class="span9">
 			<!-- index body -->
 			<h1>Welcome to TFSC System</h1>
 			<!-- index body end -->
