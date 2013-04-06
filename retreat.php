@@ -1,12 +1,9 @@
-<?php
-require_once "_parts/functions.php";
-require_once "_parts/db_settings.php";
-
-// HTML parts
-require_once "_parts/html_head.php";
-require_once "_parts/header.php";
-?>
-
+<?php include("header.php");?>
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+<body>
 <div class="container">
   <div class="row">
 	<div class="threecol">
@@ -264,4 +261,5 @@ require_once "_parts/header.php";
   </div>
 </div>
 
-<?php require_once "_parts/html_foot.php";
+</body>
+</html>
