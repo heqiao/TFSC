@@ -7,28 +7,13 @@ $(document).ready(function () {
 	$('.typeahead').typeahead({
 		source: typeahead_source
 	});
-	// $('#selectType').on('change', function(event) {
-	//     if ($(this).val() == "SYMPOSIUM") 
-	//     {
-	//         $('.event-section').slideDown();
-	//     };
-	// });
-	// 
-	// var temp = _.template( $('#session-template').html() );
-	// $('#add-session').on('click', function(event) {
-	//     var html = temp({ 
-	//         desc: $('#sessionDesc').val(), 
-	//         speaker: $('#sessionSpeaker').val() 
-	//     });
-	//     $('.event-section').after(html);
-	// });
 //view to add the sessions
 	var speaker_num = 1;
 	var session_num = 1;
 	var SectionView = Backbone.View.extend({
 
 		tagName: "div",
-		className: 'event-session',
+		className: 'event-session alert alert-info',
 		template: _.template($('#session-template-symp').html()), 
 		events: {
 			

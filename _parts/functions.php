@@ -1,5 +1,5 @@
 <?php
-//Event class
+// Event class
 // class Event {
 
 // 	public $event_attr = Array();

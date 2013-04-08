@@ -28,7 +28,7 @@ engine = innodb;
 -- table `tfsc`.`question`
 -- -----------------------------------------------------
 create  table if not exists `tfsc`.`question` (
-  `question_id` int not null auto_increment ,
+  `id` int not null auto_increment ,
   `description` varchar(250) not null ,
   `event_type` varchar(50) not null ,
   `question_flag` char(1) not null ,
@@ -36,7 +36,7 @@ create  table if not exists `tfsc`.`question` (
   `group` varchar(50) null ,
   `number_of_choices` int null ,
   `group_description` varchar(500) null ,
-  primary key (`question_id`) )
+  primary key (`id`) )
 engine = innodb;
 
 
@@ -63,7 +63,7 @@ engine = innodb;
 -- table `tfsc`.`evaluation`
 -- -----------------------------------------------------
 create  table if not exists `tfsc`.`evaluation` (
-  `evaluation_id` int not null auto_increment ,
+  `id` int not null auto_increment ,
   `question_id` int not null ,
   `event_id` int not null ,
   `session_id` int null ,
@@ -71,7 +71,7 @@ create  table if not exists `tfsc`.`evaluation` (
   `user_comment` varchar(1000) null ,
   index `fk_evaluation_question_event` (`event_id` asc) ,
   index `fk_evaluation_question_question1` (`question_id` asc) ,
-  primary key (`evaluation_id`) ,
+  primary key (`id`) ,
   index `fk_evaluation_session1` (`session_id` asc) ,
   constraint `fk_evaluation_question_event`
     foreign key (`event_id` )
@@ -80,7 +80,7 @@ create  table if not exists `tfsc`.`evaluation` (
     on update no action,
   constraint `fk_evaluation_question_question1`
     foreign key (`question_id` )
-    references `tfsc`.`question` (`question_id` )
+    references `tfsc`.`question` (`id` )
     on delete no action
     on update no action,
   constraint `fk_evaluation_session1`
@@ -95,13 +95,13 @@ engine = innodb;
 -- table `tfsc`.`participant`
 -- -----------------------------------------------------
 create  table if not exists `tfsc`.`participant` (
-  `participant_id` int not null auto_increment ,
+  `id` int not null auto_increment ,
   `first_name` varchar(50) not null ,
   `last_name` varchar(50) not null ,
   `email` varchar(50) not null ,
   `department` varchar(50) not null ,
   `meal_choice` varchar(50) not null ,
-  primary key (`participant_id`) )
+  primary key (`id`) )
 engine = innodb;
 
 
@@ -109,14 +109,14 @@ engine = innodb;
 -- table `tfsc`.`speaker`
 -- -----------------------------------------------------
 create  table if not exists `tfsc`.`speaker` (
-  `speaker_id` int not null auto_increment ,
+  `id` int not null auto_increment ,
   `first_name` varchar(50) not null ,
   `last_name` varchar(50) not null ,
   `prefix` varchar(50) null ,
   `title` varchar(50) null ,
   `department` varchar(50) null ,
   `organization` varchar(50) null ,
-  primary key (`speaker_id`) )
+  primary key (`id`) )
 engine = innodb;
 
 
@@ -137,7 +137,7 @@ create  table if not exists `tfsc`.`event_participant` (
     on update no action,
   constraint `fk_event_participant_participant1`
     foreign key (`participant_id` )
-    references `tfsc`.`participant` (`participant_id` )
+    references `tfsc`.`participant` (`id` )
     on delete no action
     on update no action)
 engine = innodb;
@@ -159,7 +159,7 @@ create  table if not exists `tfsc`.`session_speaker` (
     on update no action,
   constraint `fk_session_speaker_speaker1`
     foreign key (`speaker_id` )
-    references `tfsc`.`speaker` (`speaker_id` )
+    references `tfsc`.`speaker` (`id` )
     on delete no action
     on update no action)
 engine = innodb;
