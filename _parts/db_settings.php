@@ -1,7 +1,7 @@
 <?php
 class DBScheme {
 	// DB structure
-	public static $db_name = "tfscdb";
+	public static $db_name = "tfsc";
 	public static $tables = array(
 		"event" => array(
 			"name", 
@@ -37,7 +37,7 @@ class DBScheme {
 	public static $con;
 }
 
-DBScheme::$con = mysql_connect("localhost","root", "123");
+DBScheme::$con = mysql_connect("localhost","root", "");
 $connection = DBScheme::$con;
 mysql_select_db(DBScheme::$db_name, DBScheme::$con) or die("No db!!!");
 

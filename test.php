@@ -1,6 +1,6 @@
 <?php
 require_once "_parts/functions.php";
-require_once "_parts/db_settings.php";
+//require_once "_parts/db_settings.php";
 
 // HTML parts
 require_once "_parts/html_head.php";
@@ -8,73 +8,9 @@ require_once "_parts/header.php";
 ?>
 
 <?php
-
-// class Event {
-
-// 	public $event_attr = Array();
-// 	public $id = NULL;
-
-// 	public function __construct($post, $connection){
-// 		$this->event_attr = PostParse($post);
-// 		// print_r($this->event_attr);
-// 		$this->insertEvent($this->event_attr);
-		
-// 	}
-// 	public function insertEvent($attr){
-// 		global $connection;
-// 		$eventName         = strip_tags(trim($attr["eventName"]));
-// 		$datepicker        = strip_tags(trim($attr["datepicker"]));
-// 		$eventLoc          = strip_tags(trim($attr["eventLoc"]));
-// 		$eventDesc         = strip_tags(trim($attr["Description"]));
-// 		$eventType         = strip_tags(trim($attr["selectType"]));
-// 		$eventStart        = strip_tags(trim($attr["eventStart"]));
-// 		$eventEnd          = strip_tags(trim($attr["eventEnd"]));
-// 		$eventContactName  = strip_tags(trim($attr["eventContactName"]));
-// 		$eventContactEmail = strip_tags(trim($attr["eventContactEmail"]));
-// 		$eventContactPhone = strip_tags(trim($attr["eventContactPhone"]));
-
-// 		$sql1 = "INSERT INTO `tfscdb`.`event`
-// 					(`Name`, `Date`, `Location`, `Event_Type`, `Description`, 
-// 					`Start_Time`, `End_Time`, `Contact_Name`, `Contact_Email`, 
-// 					`Contact_Phone`)
-// 					VALUES ('$eventName', '$datepicker', '$eventLoc', 
-// 					'$eventType', '$eventDesc', '$eventStart', '$eventEnd', 
-// 					'$eventContactName', '$eventContactEmail', 
-// 					'$eventContactPhone');";
-// 		$result = mysql_query($sql1, $connection) or die ("Could not excute sql $sql1");
-// 		$this->id = mysql_insert_id($connection);
-// 	}
-// 	public function insertSession($sessions){
-// 		global $connection;
-
-// 		foreach ($sessions as $key => $session) {
-			
-// 			$sessionDesc = strip_tags(trim($sessions["sessionDesc"]));
-			
-// 	echo '<pre>';
-// 	print_r($this->id);
-// 	echo '</pre>';
-// 			$sql2 = "INSERT INTO `tfscdb`.`session` (`Title`, `Event_ID`, `Group_Name`, `Order`) 
-// 					VALUES ('$sessionDesc', '$this->id', 'example group', '1');";
-// 	echo '<pre>';
-// 	print_r($sql2);
-// 	echo '</pre>';
-					
-// 			$result = mysql_query($sql2, $connection) or die ("Could not excute sql $sql2");
-// 		}
-// 	}
-
-// }
-if(isset($connection) && isset($_POST['submitEvent']))
-{
-	$event = new Event($_POST, $connection);
-	// echo '<pre>';
-	// print_r($event->event_attr);
-	// echo '</pre>';
-	$event->insertSession($event->event_attr['session']);
-}
-
-
+	$connection = mysql_connect("localhost","root", "");
+			//Run the connection string to connecct to the databse
+	mysql_select_db("tfscdb") or die("Cannot open the database");
 ?>
 
 <div class="container">
@@ -95,24 +31,53 @@ if(isset($connection) && isset($_POST['submitEvent']))
 			  <div class="tab-content">
 			  	<!-- First tab for TA luncheon-->
 			    <div class="tab-pane active" id="tab-ta">
-			    	<form id="main-form" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-						<?php include("_parts/event_form.php"); ?> 
-					</form>	    	 
+			    	
+			    	<form id="main-form-ta" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+						<?php 
+							$event_type = "-ta"; //Define distingush id in the form
+							include("_parts/event_form.php"); 
+						?> 
+					</form>
+					<?php
+			    		if(isset($_POST['submitEvent-ta'])){
+							$eventType = "TA Luncheon";
+							$event = new Event($_POST);	
+						}
+			    	?>	    	 
 			    </div>
-			    <!-- Second tab for luncheon-->
-			    <div class="tab-pane active" id="tab-luncheon">
-			     	<form id="main-form" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-						<?php include("_parts/event_form.php"); ?> 
+			    <!-- Second tab luncheon-->
+			    <div class="tab-pane" id="tab-luncheon">
+			    	<?php
+			    		if(isset($_POST['submitEvent-luncheon'])){
+							$eventType = "Faculty Luncheon";
+							$event = new Event($_POST);	
+						}
+					?>
+			     	<form id="main-form-luncheon" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+						<?php 
+							$event_type = "-luncheon";
+							include("_parts/event_form.php"); 
+						?> 
 					</form>
 			    </div>
-			    <!-- Third tab for symposium-->
+			    <!-- Third tab Symposium-->
 			    <div class="tab-pane" id="tab-symposium">
-			    	
+			    	<?php
+
+			    		if(isset($_POST['submitEvent-symp']))
+						{
+							$eventType = "symposium";
+							$event = new Event($_POST);							
+							$event->insertSession($event->event_attr['session']);
+						}
+			    	?>
 			    	<form id="main-form-symposium" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 						<div class ="row-fluid">
 							<!-- Left part of the form -->
 							<div class ="span6">
-								<?php include("_parts/event_form.php"); ?>
+								<?php 
+									$event_type = "-symp";
+									include("_parts/event_form.php"); ?>
 							</div>
 							<!-- Right part of the form -->
 							<div class = "span6">
@@ -121,52 +86,81 @@ if(isset($connection) && isset($_POST['submitEvent']))
 									<button class="btn" id="new-breakout" type="button">Add Breakout Session</button>
 								</div>
 								<div class="event-section">
-									
+				
 								</div>
+								
 							</div>
-							<!--  -->
-							<style type="text/css" media="screen">
-								.event-session {
-									margin-top: 10px;
-									margin-bottom: 10px;
-									border:1px solid silver;
-								}
-							</style>
+							
+							<!-- // <input type='hidden' name='(session)(session_<%= session_num %>)sessionOrder' value='<%= session_num %>' /> -->
+							<!-- // <div class="controls">
+									    //     <input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" class="typeahead" id="sessionSpeaker" placeholder="Speaker">
+									    // </div> -->
 			
 							<script type="text/template" id="session-template-symp" charset="utf-8">
 								<div class="event-session">
-									// <input type='hidden' name='(session)(session_<%= session_num %>)session_desc' value='<%= desc %>' />
-									// <input type='hidden' name='(session)(session_<%= session_num %>)session_type' value='<%= type %>' />
-									// <span class="session-desc"><%= desc %></span>
-									// <span class="session-speaker"><%= speaker %></span>
-									// <span class ="session-type"><%= type %></span>
-									// <a href="#" class="add-subsession">+</a>
 									<div class="control-group">
-									    <label class="control-label" for="sessionDesc">Description:</label>
 									    <div class="controls">
-									        <input type="text" name="sessionDesc" id="sessionDesc" placeholder="">
+									        <input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc" placeholder="Description">
+									        
 									    </div>
+
 									</div>
 									<div class="control-group">
-									    <label class="control-label" for="sessionSpeaker">Speaker:</label>
-									    <div class="controls">
-									        <input type="text" name="sessionSpeaker" class="typeahead" id="sessionSpeaker">
+									    
+									    <div class="add-speaker">
+				
+										</div>
+									    <div class = "controls">
+									    	<button class="btn new-speaker" type="button">Add Speaker</button>
 									    </div>
 									</div>									
+								</div>
+							</script>
 
+							<script type="text/template" id="speaker-template-symp" charset="utf-8">
+								<div class = "session-speaker">
+									<div class="controls">
+									        <input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" class="typeahead" id="sessionSpeaker" placeholder="Speaker">
+									</div>
 								</div>
 							</script>
 						</div>
 					</form>
 					
 			    </div>
-			    <!-- Fourth tab -->
+			    <!-- Fourth tab Retreat-->
 			    <div class="tab-pane" id="tab-retreat">
-			      <p>I'm in Section 4.</p>
+			    	<form id="main-form-retreat" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+						<div class ="row-fluid">
+							<!-- Left part of the form -->
+							<div class ="span6">
+								<?php
+									//distinguish different IDs in the form 
+									$event_type = "-retreat";
+									include("_parts/event_form.php"); 
+								?>
+							</div>
+							<!-- Right part of the form -->
+							<div class = "span6">
+							</div>
+						</div>
+					</form>			
 			    </div>
-			    <!-- Fifth tab -->
+			    <!-- Fifth tab Orientation-->
 			    <div class="tab-pane" id="tab-orientation">
-			      <p>I'm in Section 5.</p>
+			      <form id="main-form-orientation" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+						<div class ="row-fluid">
+							<!-- Left part of the form -->
+							<div class ="span6">
+								<?php 
+									$event_type = "-orientation";
+									include("_parts/event_form.php"); ?>
+							</div>
+							<!-- Right part of the form -->
+							<div class = "span6">
+							</div>
+						</div>
+					</form>	
 			    </div>
 
 			  </div>

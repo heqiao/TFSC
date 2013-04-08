@@ -31,3 +31,13 @@ label{
 .threecol{
     margin-right: 0px !important;
 }
+.event-session {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border:1px solid silver;
+}
+.session-speaker {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border:1px solid silver;
+}

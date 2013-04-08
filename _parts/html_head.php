@@ -30,7 +30,7 @@
 	<script src="js/underscore.min.js"></script>
 	<script src="js/backbone.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/tfsc.js"></script>
+	<script src="js/tfsc.js?body=1"></script>
 </head>
 <body>
 <!--[if lt IE 7]>
