@@ -67,30 +67,32 @@ require_once "_parts/header.php";
 			    		if(isset($_POST['submitEvent-symp']))
 						{
 							// $eventType = "symposium";
-							 $event = new Event(array(
-							 	"name" => $_POST['name'],
-								"date" => $_POST['date'], 
-								"location" => $_POST['location'], 
-								"event_type"=> $_POST['event_type'], 
-								"description" => $_POST['description'], 
-								"start_time" => $_POST['start_time'],
-								"end_time" => $_POST['end_time'],
-								"contact_name" => $_POST['contact_name'],
-								"contact_email" => $_POST['contact_email'],
-								"contact_phone" => $_POST['contact_phone']
-							 ));
+							$post = PostParse($_POST);
+							$event = new Event(array(
+							 	"name" => $post['name'],
+								"date" => $post['date'], 
+								"location" => $post['location'], 
+								"event_type"=> $post['event_type'], 
+								"description" => $post['description'], 
+								"start_time" => $post['start_time'],
+								"end_time" => $post['end_time'],
+								"contact_name" => $post['contact_name'],
+								"contact_email" => $post['contact_email'],
+								"contact_phone" => $post['contact_phone']
+							));
 
-							 $event->save();
+							$event->save();
 							 
-							 foreach ($sessions as $key => $session) {
-								// echo '<pre>';
-								// print_r($sessions);
-								// echo '</pre>';
+							foreach ($post['session'] as $key => $session) {
+								echo '<pre>';
+								print_r($session);
+								echo '</pre>';
+								$new_session = new Session(array(
+									'title' => $session['sessionDesc']
+								));
 
-								//$sessionDesc  = strip_tags(trim($session["sessionDesc"]));
+								$event->add_session($new_session);	
 							}
-
-							// $event->insertSession($event->event_attr['session']);
 						}
 			    	?>
 			    	<form id="main-form-symposium" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

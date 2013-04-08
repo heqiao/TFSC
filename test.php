@@ -142,6 +142,21 @@ require_once "_parts/header.php";
 							</div>
 							<!-- Right part of the form -->
 							<div class = "span6">
+								<script type="text/template" id="session-template-retreat" charset="utf-8">
+								<div class="event-session retreat">
+									<div class="control-group">
+									    <div class="controls">
+									        <input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc-retreat" placeholder="Description">
+									    </div>
+									</div>
+									<div class="control-group">
+									   <div class="controls">
+									        <input type="text" name="(session)(session_<%= session_num %>)sessionGroup" id="sessionGroup" placeholder="">
+									        
+									    </div>
+									</div>									
+								</div>
+							</script>
 							</div>
 						</div>
 					</form>			

@@ -18,7 +18,8 @@ class DBScheme {
 		"session" => array(
 			"event_id",
 			"title",
-			"group_name"
+			"group_name",
+			"order"
 		),
 		"session_speaker" => array(
 			"speaker_id",
