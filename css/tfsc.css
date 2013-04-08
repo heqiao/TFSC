@@ -41,3 +41,8 @@ label{
     margin-bottom: 10px;
     /*border:1px solid silver;*/
 }
+.close{
+    float: none;
+    position: relative;
+}
+

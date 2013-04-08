@@ -49,6 +49,9 @@ require_once "_parts/header.php";
 	//The symposium form is submitted		  
 	if(isset($_POST['submitEvent-symp'])){         
 		$post = PostParse($_POST);
+		echo '<pre>';
+			print_r($post);
+			echo '</pre>';
 		$event = new Event(array(
 		 	"name" => $post['eventName'],
 			"date" => $post['datepicker'], 
@@ -80,7 +83,6 @@ require_once "_parts/header.php";
 		<div class="span3">
 			<?php include("_parts/sidebar.php"); ?>
 		</div>
-		
 		<div class = "span9">
 			<div class="tabbable"> <!-- Only required for left/right tabs -->
 			  <ul class="nav nav-tabs">
@@ -90,7 +92,7 @@ require_once "_parts/header.php";
 			    <li><a href="#tab-retreat" data-toggle="tab">Teaching Retreat</a></li>
 			    <li><a href="#tab-orientation" data-toggle="tab">Orientation</a></li>
 			   </ul>
-			  <div class="tab-content">
+			<div class="tab-content">
 			  	<!-- First tab for TA luncheon-->
 			    <div class="tab-pane active" id="tab-ta">
 			    	
@@ -131,43 +133,56 @@ require_once "_parts/header.php";
 								<div class="event-section">
 				
 								</div>
-								
+								<div class ="breakout-section">
+								</div>
 							</div>
 							
 							<!-- <input type='hidden' name='(session)(session_<%= session_num %>)sessionOrder' value='<%= session_num %>' /> -->
 							<!-- <div class="controls">
 							<input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" class="typeahead" id="sessionSpeaker" placeholder="Speaker">
 							</div> 
+							<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
+									class="typeahead" id="sessionSpeaker" placeholder="Speaker"> 
 							-->
-			
+							<!-- Template for add a new session -->
 							<script type="text/template" id="session-template-symp" charset="utf-8">
-								
-
-									<div class="control-group">
-									    <div class="controls">
-									        <input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc" placeholder="Description">
-									    	
-									    </div>
+								<div class="control-group">
+									<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc" placeholder="Description">
+										
+								</div>
+								<div class="control-group">
+								    <div class="add-speaker">
 									</div>
-									<div class="control-group">
-									    <div class="add-speaker">
-										</div>
-									    <div class = "controls">
-									    	<button class="btn new-speaker" type="button">Add Speaker</button>
-									    </div>
-									</div>									
+								    	<button class="btn new-speaker" type="button">Add Speaker</button>
+								</div>									
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
 								
+							</script>
+							<!-- Template for adding a breakout session -->
+							<script type="text/template" id="breakout-template-symp" charset="utf-8">
+								<h3>Breakout Session <%= breakout_num %></h3>
+								<button class="btn" class="new-subsession" type="button">Add subSession</button>
+								<div class="control-group">
+									<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc" placeholder="Description">
+									<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
+									class="typeahead" id="sessionSpeaker" placeholder="Speaker"> 	
+								</div>
+								<div class="control-group">
+								    <div class="add-speaker">
+									</div>
+								    	<button class="btn new-speaker" type="button">Add Speaker</button>
+								</div>									
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<div class="add-subsession">
+									</div>
+							</script>	
+							<!-- Template for adding a speaker -->
+							<script type="text/template" id="speaker-template-symp" charset="utf-8">
+								<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
+								class="typeahead" id="sessionSpeaker" placeholder="Speaker">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
 							</script>
-
-							<script type="text/template" id="speaker-template-symp" charset="utf-8">
-								
-									<div class="controls">
-									        <input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" class="typeahead" id="sessionSpeaker" placeholder="Speaker">
-											<button type="button" class="close" data-dismiss="alert">&times;</button>
-									</div>
-								
-							</script>
+							
 						</div>
 					</form>
 					
@@ -206,10 +221,8 @@ require_once "_parts/header.php";
 						</div>
 					</form>	
 			    </div>
-
-			  </div>
 			</div>
-			
+			</div>
 		</div>
 	</div>
 </div>
