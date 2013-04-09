@@ -17,7 +17,6 @@ $(document).ready(function () {
 		className: 'event-session alert alert-info',
 		template: _.template($('#session-template-symp').html()), 
 		events: {
-			
 			"click .new-speaker": "addSpeaker"
 		},
 		initialize: function () {
@@ -85,7 +84,7 @@ $(document).ready(function () {
 			this.$el.html(this.template(this.options));
 		}
 	});
-
+//Symposium form view
 	var SymposiumFormView = Backbone.View.extend({
 		// HTML
 		el: $('#main-form-symposium'), 
@@ -101,7 +100,8 @@ $(document).ready(function () {
 				session_num: session_num,
 				speaker_num: speaker_num
 			});
-			$('.event-section').before(breakoutView.el);
+			$('.symp-session-section').before(breakoutView.el);
+
 			breakout_num ++;
 			// console.log("end of newBreakout");
 		},
@@ -115,13 +115,40 @@ $(document).ready(function () {
 				//desc: null,
 				//speaker: null
 			});
-			$('.event-section').before(sessionView.el);
-			//$('.sessionDesc').focus();
+			$('.symp-session-section').before(sessionView.el);
+			$('.sessionDesc').focus();
 			session_num ++;
 		}
 	});
+	var RetreatSessionView = Backbone.View.extend({
 
+		tagName: "div",
+		className: 'retreat-session alert alert-info',
+		template: _.template($('#session-template-retreat').html()), 
+		initialize: function () {
+			// console.log(this.options);
+			this.$el.html(this.template(this.options));
+			}
+		});
+// Retreat form view
+	var RetreatFormView	= Backbone.View.extend({
+		// HTML
+		el: $('#main-form-retreat'),
+
+		// Event
+		events:{
+			"click #new-session-retreat":"newRetreatSession"
+		},
+		newRetreatSession: function(){
+			var retreatSessionView = new RetreatSessionView({
+				session_num:session_num
+			}); 
+			$('.retreat-session-section').before(retreatSessionView.el);
+			session_num ++;
+		}
+	});
 	var symposium_form_view = new SymposiumFormView();
-	console.log(symposium_form_view.events);
+	var retreat_form_view = new RetreatFormView();
+	//console.log(retreat_form_view.events);
 
 });
