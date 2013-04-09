@@ -17,10 +17,10 @@ $(document).ready(function () {
 		className: 'event-session alert alert-info',
 		template: _.template($('#session-template-symp').html()), 
 		events: {
-			
 			"click .new-speaker": "addSpeaker"
 		},
 		initialize: function () {
+			console.log("in init of SessionView");
 			// console.log(this.options);
 			this.$el.html(this.template(this.options));
 			var foo = $('.session-speaker');
@@ -28,12 +28,16 @@ $(document).ready(function () {
 
 			if(foo.size() == 0)
 			{
-				this.$('.new-speaker').trigger('click');
+				console.log("===");
+				console.log(this.events);
+				this.addSpeaker();
+				
 				speaker_num++;
 			};
 		},
 		
 		addSpeaker: function() {
+			console.log("in addSpeaker");
 			var session_num = this.options.session_num;
 			//var speaker_num = this.options.speaker_num;
 			var speakerView = new SpeakerView({
@@ -42,7 +46,6 @@ $(document).ready(function () {
 			});
 			this.$('.add-speaker').after(speakerView.el);
 			speaker_num ++;
-
 		}
 	});
 //view to add breakout session
