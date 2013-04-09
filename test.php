@@ -120,7 +120,8 @@ require_once "_parts/header.php";
 							<script type="text/template" id="speaker-template-symp" charset="utf-8">
 								<div class = "session-speaker">
 									<div class="controls">
-									        <input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" class="typeahead" id="sessionSpeaker" placeholder="Speaker">
+										<input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" 
+										class="typeahead" id="sessionSpeaker" placeholder="Speaker">
 									</div>
 								</div>
 							</script>
