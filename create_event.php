@@ -231,19 +231,15 @@ require_once "_parts/header.php";
 		</div>									
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>
-	<!-- Template for adding a breakout session for sumposium-->
+	<!-- Template for adding a breakout session for sumposium
+<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
+			 -->
 	<script type="text/template" id="breakout-template-symp" charset="utf-8">
 		<h3>Breakout Session <%= breakout_num %></h3>
 		<button class="btn" class="new-subsession" type="button">Add subSession</button>
-		<div class="control-group">
-			<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
-			 	
-		</div>
-		<div class="control-group">
-		    <div class="add-speaker">
-			</div>
-		    	<button class="btn new-speaker" type="button">Add Speaker</button>
-		</div>									
+		<div class="addSub">
+				
+		</div>								
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		
 		<div class="add-subsession">

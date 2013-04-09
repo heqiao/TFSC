@@ -59,8 +59,7 @@ $(document).ready(function () {
 			this.$el.html(this.template(this.options));
 		},
 		newSubSession: function () {
-			//console.log("newSubSession");
-			var subSessionView = new SympSessionView({
+			var sessionView = new SympSessionView({
 				session_num: session_num,
 				speaker_num: speaker_num
 				// type: $('#sessionType option:selected').text(),
@@ -69,10 +68,9 @@ $(document).ready(function () {
 				//desc: null,
 				//speaker: null
 			});
-			$('.add-subsession').before(subSessionView.el);
-
+			$('.addSub').before(sessionView.el);
+			$('.sessionDesc').focus();
 			session_num ++;
-			//console.log("end of newSubSession");
 		}
 	});
 //view of speakers
