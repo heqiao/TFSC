@@ -122,6 +122,7 @@ $(document).ready(function () {
 			session_num ++;
 		}
 	});
+	//Retreat session view
 	var RetreatSessionView = Backbone.View.extend({
 
 		tagName: "div",
@@ -132,7 +133,7 @@ $(document).ready(function () {
 			this.$el.html(this.template(this.options));
 			}
 		});
-// Retreat form view
+	// Retreat form view
 	var RetreatFormView	= Backbone.View.extend({
 		// HTML
 		el: $('#main-form-retreat'),
@@ -149,6 +150,7 @@ $(document).ready(function () {
 			session_num ++;
 		}
 	});
+	
 	var symposium_form_view = new SymposiumFormView();
 	var retreat_form_view = new RetreatFormView();
 	//console.log(retreat_form_view.events);
