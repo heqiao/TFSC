@@ -18,7 +18,14 @@ include "db_settings.php";
 
 // speaker
 $helper = new Session(true);
-$new_session = $helper->find_by_id(13);
+$new_session = $helper->find_by_id(3);
+print_r($new_session);
+
+$speaker = new Speaker(array(
+	"first_name" => "Daiwei Lu",
+	"last_name" => "Anqi Lu"
+));
+$new_session[0]->add_speaker($speaker);
 print_r($new_session[0]->speaker);
 
 // $helper = new Event(true);
