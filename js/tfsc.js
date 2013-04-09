@@ -21,13 +21,13 @@ $(document).ready(function () {
 			"click .new-speaker": "addSpeaker"
 		},
 		initialize: function () {
-			// console.log(this.options);
 			this.$el.html(this.template(this.options));
-			var foo = $('.session-speaker');			
-			if(foo.size() == 0)
+			// if there is no speaker, add one 
+			var speaker_sec_num = this.$('.session-speaker');			
+			if(speaker_sec_num.size() == 0)
 			{
 				this.addSpeaker();
-				speaker_num++;
+				//speaker_num++;
 			};
 		},
 		addSpeaker: function() {
@@ -48,12 +48,18 @@ $(document).ready(function () {
 		className: 'breakout-session alert alert-info',
 		template: _.template($('#breakout-template-symp').html()), 
 		events: {
-			
 			"click .new-subsession": "newSubSession"
 		},
 		initialize: function () {
-			console.log(this.options);
 			this.$el.html(this.template(this.options));
+			var session_sec_num = this.$('.event-session alert alert-info');
+			//console.log(session_sec_num);			
+			if(session_sec_num.size() == 0)
+			{
+
+				this.newSubSession();
+				//session_num++;
+			};
 		},
 		newSubSession: function () {
 			var subSessionView = new SympSessionView({
@@ -63,7 +69,6 @@ $(document).ready(function () {
 			$('.addSub').before(subSessionView.el);
 			session_num ++;
 		}
-		
 	});
 //view of speakers
 	var SpeakerView = Backbone.View.extend({
@@ -96,11 +101,6 @@ $(document).ready(function () {
 			var sessionView = new SympSessionView({
 				session_num: session_num,
 				speaker_num: speaker_num
-				// type: $('#sessionType option:selected').text(),
-				// desc: $('#sessionDesc').val(),
-				// speaker: $('#sessionSpeaker').val(),
-				//desc: null,
-				//speaker: null
 			});
 			$('.symp-session-section').before(sessionView.el);
 			$('.sessionDesc').focus();
@@ -135,9 +135,37 @@ $(document).ready(function () {
 			session_num ++;
 		}
 	});
-	
+	//Orient session view
+	var OrientSessionView = Backbone.View.extend({
+
+		tagName: "div",
+		className: 'orient-session alert alert-info',
+		template: _.template($('#session-template-orient').html()), 
+		initialize: function () {
+			// console.log(this.options);
+			this.$el.html(this.template(this.options));
+			}
+		});
+	// Orient form view
+	var OrientFormView	= Backbone.View.extend({
+		// HTML
+		el: $('#main-form-orient'),
+
+		// Event
+		events:{
+			"click #new-session-orient":"newOrientSession"
+		},
+		newOrientSession: function(){
+			var orientSessionView = new OrientSessionView({
+				session_num:session_num
+			}); 
+			$('.orient-session-section').before(orientSessionView.el);
+			session_num ++;
+		}
+	});
 	var symposium_form_view = new SymposiumFormView();
 	var retreat_form_view = new RetreatFormView();
-	//console.log(symposium_form_view.events);
+	var orient_form_view = new OrientFormView();
+	//console.log(orient_form_view.events);
 
 });
