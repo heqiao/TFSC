@@ -53,10 +53,10 @@ $(document).ready(function () {
 		initialize: function () {
 			this.$el.html(this.template(this.options));
 			var session_sec_num = this.$('.event-session alert alert-info');
-			//console.log(session_sec_num);			
+			//console.log(session_sec_num);	
+			// alert(session_sec_num.size());		
 			if(session_sec_num.size() == 0)
 			{
-
 				this.newSubSession();
 				//session_num++;
 			};
@@ -66,7 +66,7 @@ $(document).ready(function () {
 				session_num: session_num,
 				speaker_num: speaker_num
 			});
-			$('.addSub').before(subSessionView.el);
+			this.$('.addSub').before(subSessionView.el);
 			session_num ++;
 		}
 	});

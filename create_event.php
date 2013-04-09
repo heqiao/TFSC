@@ -69,6 +69,7 @@ require_once "_parts/header.php";
 		foreach ($post['session'] as $key => $session) {
 			$new_session = new Session(array(
 				'title' => $session['sessionDesc'],
+				'group_name' => $session['sessionGroup'],
 				'order' => $session_order
 			));
 			$event->add_session($new_session);
@@ -274,17 +275,19 @@ require_once "_parts/header.php";
 		<div class="control-group">
 		    <div class="add-speaker">
 			</div>
-		    	<button class="btn new-speaker" type="button">Add Speaker</button>
+		    <button class="btn new-speaker" type="button">Add Speaker</button>
 		</div>									
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>
 	<!-- Template for adding a breakout session for sumposium-->
 	<script type="text/template" id="breakout-template-symp" charset="utf-8">
 		<h3>Breakout Session <%= breakout_num %></h3>
-		<button class="btn new-subsession" type="button">Add subSession</button>
+		<input type='hidden' name='(session)(session_<%= breakout_num %>)sessionGroup' value='Breakout Session <%= breakout_num %>' />
+		
 		<div class="addSub">
 				
-		</div>								
+		</div>
+		<button class="btn new-subsession" type="button">Add subSession</button>								
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>	
 	<!-- Template for adding a speaker -->
