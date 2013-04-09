@@ -282,7 +282,7 @@ require_once "_parts/header.php";
 	<!-- Template for adding a breakout session for sumposium-->
 	<script type="text/template" id="breakout-template-symp" charset="utf-8">
 		<h3>Breakout Session <%= breakout_num %></h3>
-		<input type='hidden' name='(session)(session_<%= breakout_num %>)sessionGroup' value='Breakout Session <%= breakout_num %>' />
+		<input type='hidden' name='(session)(session_<%= session_num %>)sessionGroup' value='Breakout Session <%= breakout_num %>' />
 		
 		<div class="addSub">
 				
