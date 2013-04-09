@@ -80,13 +80,26 @@ class ActiveModule {
 		}
 		// add_
 		else if (preg_match("/^(add_)(.+)/", $method, $matches)) {
-			if (!in_array($matches[2], $this->has_many)) {
-				die("ERROR: ".get_class($this)." do not have \"".$name."\" attribute.");
-			} else {
+			// has_many
+			if (isset($this->has_many) && in_array($matches[2], $this->has_many)) {
 				$forgein_key_name = strtolower(get_class($this)) . "_id";
 				$args[0]->{$forgein_key_name} = $this->id;
 				$args[0]->save();
 				return $this;
+			} 
+			// has_many_and_belongs_to
+			else if (isset($this->has_many_and_belongs_to) && in_array($matches[2], $this->has_many_and_belongs_to)) {
+				$args[0]->save();
+				$table_name_array = array(strtolower(get_class($args[0])), strtolower(get_class($this)));
+				asort($table_name_array);
+				$connection_table_name = implode("_", $table_name_array);
+				$sql = "INSERT INTO `".DBScheme::$db_name."`.`{$connection_table_name}` (`".strtolower(get_class($args[0]))."_id`, `".strtolower(get_class($this))."_id`) VALUE (\"{$args[0]->id}\", \"{$this->id}\");";
+				mysql_query($sql);
+				return $this;
+			}
+			// die
+			else {
+				die("ERROR: ".get_class($this)." do not have \"".$name."\" attribute.");
 			}
 		}
 	}
@@ -170,7 +183,6 @@ class ActiveModule {
 							$row_cleaned[strtolower($key)] = $value;
 						}
 					}
-					print_r($row_cleaned);
 					$object = new $targe_module_name($row_cleaned);
 					array_push($objects, $object);
 				}
