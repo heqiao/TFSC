@@ -133,55 +133,9 @@ require_once "_parts/header.php";
 								<div class="event-section">
 				
 								</div>
-								<div class ="breakout-section">
-								</div>
+								
 							</div>
 							
-							<!-- <input type='hidden' name='(session)(session_<%= session_num %>)sessionOrder' value='<%= session_num %>' /> -->
-							<!-- <div class="controls">
-							<input type="text" name="(session)(session_<%= session_num %>)(speaker_<%= speaker_num %>)sessionSpeaker" class="typeahead" id="sessionSpeaker" placeholder="Speaker">
-							</div> 
-							<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
-									class="typeahead" id="sessionSpeaker" placeholder="Speaker"> 
-							-->
-							<!-- Template for add a new session -->
-							<script type="text/template" id="session-template-symp" charset="utf-8">
-								<div class="control-group">
-									<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc" placeholder="Description">
-										
-								</div>
-								<div class="control-group">
-								    <div class="add-speaker">
-									</div>
-								    	<button class="btn new-speaker" type="button">Add Speaker</button>
-								</div>									
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								
-							</script>
-							<!-- Template for adding a breakout session -->
-							<script type="text/template" id="breakout-template-symp" charset="utf-8">
-								<h3>Breakout Session <%= breakout_num %></h3>
-								<button class="btn" class="new-subsession" type="button">Add subSession</button>
-								<div class="control-group">
-									<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" id="sessionDesc" placeholder="Description">
-									<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
-									class="typeahead" id="sessionSpeaker" placeholder="Speaker"> 	
-								</div>
-								<div class="control-group">
-								    <div class="add-speaker">
-									</div>
-								    	<button class="btn new-speaker" type="button">Add Speaker</button>
-								</div>									
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<div class="add-subsession">
-									</div>
-							</script>	
-							<!-- Template for adding a speaker -->
-							<script type="text/template" id="speaker-template-symp" charset="utf-8">
-								<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
-								class="typeahead" id="sessionSpeaker" placeholder="Speaker">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-							</script>
 							
 						</div>
 					</form>
@@ -201,6 +155,7 @@ require_once "_parts/header.php";
 							</div>
 							<!-- Right part of the form -->
 							<div class = "span6">
+
 							</div>
 						</div>
 					</form>			
@@ -225,4 +180,49 @@ require_once "_parts/header.php";
 			</div>
 		</div>
 	</div>
+	<!-- Template for add a new session for retreat-->
+	<script type="text/template" id="session-template-retreat" charset="utf-8">
+		<div class="control-group">
+			<input type="text" name="(session)(session_<%= session_num %>)sessionGroup" class="sessionDesc" placeholder="Group">
+			<input type="text" name="(session)(session_<%= session_num %>)sessionTitle" class="sessionDesc" placeholder="Title">
+		</div>									
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</script>
+	<!-- Template for add a new session for symposium-->
+	<script type="text/template" id="session-template-symp" charset="utf-8">
+		<div class="control-group">
+			<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
+				
+		</div>
+		<div class="control-group">
+		    <div class="add-speaker">
+			</div>
+		    	<button class="btn new-speaker" type="button">Add Speaker</button>
+		</div>									
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</script>
+	<!-- Template for adding a breakout session for sumposium-->
+	<script type="text/template" id="breakout-template-symp" charset="utf-8">
+		<h3>Breakout Session <%= breakout_num %></h3>
+		<button class="btn" class="new-subsession" type="button">Add subSession</button>
+		<div class="control-group">
+			<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
+			 	
+		</div>
+		<div class="control-group">
+		    <div class="add-speaker">
+			</div>
+		    	<button class="btn new-speaker" type="button">Add Speaker</button>
+		</div>									
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		
+		<div class="add-subsession">
+		</div>
+	</script>	
+	<!-- Template for adding a speaker -->
+	<script type="text/template" id="speaker-template-symp" charset="utf-8">
+		<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
+		class="typeahead" class="sessionSpeaker" placeholder="Speaker">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</script>
 </div>
