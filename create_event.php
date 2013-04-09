@@ -66,13 +66,21 @@ require_once "_parts/header.php";
 		));
 		$event->save();
 		foreach ($post['session'] as $key => $session) {
-			echo '<pre>';
-			print_r($session);
-			echo '</pre>';
 			$new_session = new Session(array(
 				'title' => $session['sessionDesc']
 			));
-			$event->add_session($new_session);	
+			$event->add_session($new_session);
+			foreach ($session['speaker'] as $key => $speaker) {
+				$new_speaker = new Speaker(array(
+					"first_name" => $speaker['sessionSpeaker'],
+					"last_name" => $speaker['sessionSpeaker'],
+					"prefix" => $speaker['sessionSpeaker'],
+					"title" => $speaker['sessionSpeaker'],
+					"department" => $speaker['sessionSpeaker'],
+					"organization" => $speaker['sessionSpeaker']
+				));
+				$new_session->add_speaker($new_speaker);
+			}		
 		}
 	}
 	//The retreat form is submitted		  
@@ -92,14 +100,13 @@ require_once "_parts/header.php";
 		));
 		$event->save();
 		foreach ($post['session'] as $key => $session) {
-			echo '<pre>';
-			print_r($session);
-			echo '</pre>';
+			
 			$new_session = new Session(array(
 				'title' => $session['sessionTitle'],
 				'group_name' => $session['sessionGroup']
 			));
-			$event->add_session($new_session);	
+			$event->add_session($new_session);
+
 		}
 	}
 			    	
@@ -231,9 +238,7 @@ require_once "_parts/header.php";
 		</div>									
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>
-	<!-- Template for adding a breakout session for sumposium
-<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
-			 -->
+	<!-- Template for adding a breakout session for sumposium-->
 	<script type="text/template" id="breakout-template-symp" charset="utf-8">
 		<h3>Breakout Session <%= breakout_num %></h3>
 		<button class="btn" class="new-subsession" type="button">Add subSession</button>
@@ -241,9 +246,6 @@ require_once "_parts/header.php";
 				
 		</div>								
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		
-		<div class="add-subsession">
-		</div>
 	</script>	
 	<!-- Template for adding a speaker -->
 	<script type="text/template" id="speaker-template-symp" charset="utf-8">

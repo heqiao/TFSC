@@ -23,12 +23,9 @@ $(document).ready(function () {
 		initialize: function () {
 			// console.log(this.options);
 			this.$el.html(this.template(this.options));
-			var foo = $('.session-speaker');
-			console.log(foo.size());
-			
+			var foo = $('.session-speaker');			
 			if(foo.size() == 0)
 			{
-				console.log(this.$('.new-speaker'));
 				this.addSpeaker();
 				speaker_num++;
 			};
@@ -43,7 +40,6 @@ $(document).ready(function () {
 			this.$('.add-speaker').before(speakerView.el);
 			//$('.sessionSpeaker').focus();
 			speaker_num ++;
-
 		}
 	});
 //view to add breakout session
@@ -52,30 +48,25 @@ $(document).ready(function () {
 		className: 'breakout-session alert alert-info',
 		template: _.template($('#breakout-template-symp').html()), 
 		events: {
+			
 			"click .new-subsession": "newSubSession"
 		},
 		initialize: function () {
-			// console.log(this.options);
+			console.log(this.options);
 			this.$el.html(this.template(this.options));
 		},
 		newSubSession: function () {
-			var sessionView = new SympSessionView({
+			var subSessionView = new SympSessionView({
 				session_num: session_num,
 				speaker_num: speaker_num
-				// type: $('#sessionType option:selected').text(),
-				// desc: $('#sessionDesc').val(),
-				// speaker: $('#sessionSpeaker').val(),
-				//desc: null,
-				//speaker: null
 			});
-			$('.addSub').before(sessionView.el);
-			$('.sessionDesc').focus();
+			$('.addSub').before(subSessionView.el);
 			session_num ++;
 		}
+		
 	});
 //view of speakers
 	var SpeakerView = Backbone.View.extend({
-
 		tagName: "div",
 		className: 'session-speaker',
 		template: _.template($('#speaker-template-symp').html()), 
@@ -96,14 +87,10 @@ $(document).ready(function () {
 		},
 		newBreakout: function(){
 			var breakoutView = new BreakoutView({
-				breakout_num:breakout_num,
-				session_num: session_num,
-				speaker_num: speaker_num
+				breakout_num:breakout_num
 			});
 			$('.symp-session-section').before(breakoutView.el);
-
 			breakout_num ++;
-			// console.log("end of newBreakout");
 		},
 		newSession: function () {
 			var sessionView = new SympSessionView({
@@ -151,6 +138,6 @@ $(document).ready(function () {
 	
 	var symposium_form_view = new SymposiumFormView();
 	var retreat_form_view = new RetreatFormView();
-	//console.log(retreat_form_view.events);
+	//console.log(symposium_form_view.events);
 
 });

@@ -1,7 +1,7 @@
 <?php
 class DBScheme {
 	// DB structure
-	public static $db_name = "tfsc";
+	public static $db_name = "tfscdb";
 	public static $tables = array(
 		"event" => array(
 			"name", 
