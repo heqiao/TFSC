@@ -42,9 +42,3 @@ label{
     /*border:1px solid silver;*/
 }
 /*.alert .close{position:relative;top:-2px;right:-21px;line-height:20px;}*/
-.close.speaker{
-    position:fixed;
-    top: 0px;
-    right:0px ;
-    line-height:20px;
-}

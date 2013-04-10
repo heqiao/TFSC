@@ -37,7 +37,7 @@ $(document).ready(function () {
 				session_num: session_num,
 				speaker_num: speaker_num
 			});
-			this.$('.add-speaker').before(speakerView.el);
+			this.$('.add-speaker').append(speakerView.el);
 			//$('.sessionSpeaker').focus();
 			speaker_num ++;
 		}

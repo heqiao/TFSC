@@ -1,4 +1,3 @@
-
 <!-- event name -->
 <div class="control-group">
 	<label class="control-label" for="eventName<?php echo $event_type;?>">Event Name:</label>
