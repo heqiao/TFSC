@@ -3,6 +3,8 @@ require_once "_parts/functions.php";
 require_once "_parts/db_settings.php";
 
 // HTML parts
+$page_stylesheet = "create_event.css";
+// $page_javascript = "";
 require_once "_parts/html_head.php";
 require_once "_parts/header.php";
 ?>
@@ -13,7 +15,7 @@ require_once "_parts/header.php";
 	// mysql_select_db("tfscdb") or die("Cannot open the database");
 
 	//The TA form is submitted
-	if(isset($_POST['submitEvent-ta'])){			
+	if(isset($_POST['submitEvent-ta'])){
 		$post = PostParse($_POST);
 		$event = new Event(array(
 		 	"name" => $post['eventName'],
@@ -69,6 +71,7 @@ require_once "_parts/header.php";
 		foreach ($post['session'] as $key => $session) {
 			$new_session = new Session(array(
 				'title' => $session['sessionDesc'],
+				'group_name' => $session['sessionGroup'],
 				'order' => $session_order
 			));
 			$event->add_session($new_session);
@@ -84,7 +87,6 @@ require_once "_parts/header.php";
 				));
 				$new_session->add_speaker($new_speaker);
 			}
-
 		}
 	}
 	//The retreat form is submitted		  
@@ -104,13 +106,11 @@ require_once "_parts/header.php";
 		));
 		$event->save();
 		foreach ($post['session'] as $key => $session) {
-			
 			$new_session = new Session(array(
 				'title' => $session['sessionTitle'],
 				'group_name' => $session['sessionGroup']
 			));
 			$event->add_session($new_session);
-
 		}
 	}
 	//The orientation form is submitted		  
@@ -134,16 +134,19 @@ require_once "_parts/header.php";
 				'title' => $session['sessionTitle']
 			));
 			$event->add_session($new_session);
-
 		}
 	}		    	
 ?>
 
 <div class="container">
 	<div class="row">
+		
+		<!-- sidebar -->
 		<div class="span3">
 			<?php include("_parts/sidebar.php"); ?>
 		</div>
+		
+		<!-- form -->
 		<div class = "span9">
 			<div class="tabbable"> <!-- Only required for left/right tabs -->
 			  	<ul class="nav nav-tabs">
@@ -154,9 +157,9 @@ require_once "_parts/header.php";
 				    <li><a href="#tab-orientation" data-toggle="tab">Orientation</a></li>
 			   	</ul>
 				<div class="tab-content">
+					
 				  	<!-- First tab for TA luncheon-->
 				    <div class="tab-pane active" id="tab-ta">
-				    	
 				    	<form id="main-form-ta" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 							<?php 
 								$event_type = "-ta"; //Define distingush id in the form
@@ -164,6 +167,7 @@ require_once "_parts/header.php";
 							?> 
 						</form>	    	 
 				    </div>
+					
 				    <!-- Second tab luncheon-->
 				    <div class="tab-pane" id="tab-luncheon">
 				     	<form id="main-form-luncheon" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -173,9 +177,9 @@ require_once "_parts/header.php";
 							?> 
 						</form>
 				    </div>
+					
 				    <!-- Third tab Symposium-->
 				    <div class="tab-pane" id="tab-symposium">
-				    	
 				    	<form id="main-form-symposium" class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 							<div class ="row-fluid">
 								<!-- Left part of the form -->
@@ -183,7 +187,7 @@ require_once "_parts/header.php";
 									<?php 
 										$event_type = "-symp";
 										include("_parts/event_form.php");
-									 ?>
+									?>
 								</div>
 								<!-- Right part of the form -->
 								<div class = "span6">
@@ -250,47 +254,5 @@ require_once "_parts/header.php";
 			</div>
 		</div>
 	</div>
-	<!-- Template for add a new session for symposium-->
-	<script type="text/template" id="session-template-orient" charset="utf-8">
-		<div class="control-group">
-			<input type="text" name="(session)(session_<%= session_num %>)sessionTitle" class="sessionDesc" placeholder="Title">
-		</div>									
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-	</script>
-	<!-- Template for add a new session for retreat-->
-	<script type="text/template" id="session-template-retreat" charset="utf-8">
-		<div class="control-group">
-			<input type="text" name="(session)(session_<%= session_num %>)sessionGroup" class="sessionDesc" placeholder="Group">
-			<input type="text" name="(session)(session_<%= session_num %>)sessionTitle" class="sessionDesc" placeholder="Title">
-		</div>									
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-	</script>
-	<!-- Template for add a new session for symposium-->
-	<script type="text/template" id="session-template-symp" charset="utf-8">
-		<div class="control-group">
-			<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
-				
-		</div>
-		<div class="control-group">
-		    <div class="add-speaker">
-			</div>
-		    	<button class="btn new-speaker" type="button">Add Speaker</button>
-		</div>									
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-	</script>
-	<!-- Template for adding a breakout session for sumposium-->
-	<script type="text/template" id="breakout-template-symp" charset="utf-8">
-		<h3>Breakout Session <%= breakout_num %></h3>
-		<button class="btn new-subsession" type="button">Add subSession</button>
-		<div class="addSub">
-				
-		</div>								
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-	</script>	
-	<!-- Template for adding a speaker -->
-	<script type="text/template" id="speaker-template-symp" charset="utf-8">
-		<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
-		class="typeahead" class="sessionSpeaker" placeholder="Speaker">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-	</script>
 </div>
+<?php include "_templates/create_event_template.php";

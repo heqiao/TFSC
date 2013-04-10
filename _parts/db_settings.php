@@ -38,7 +38,7 @@ class DBScheme {
 	public static $connection;
 }
 
-DBScheme::$connection = mysql_connect("localhost","root", "");
+DBScheme::$connection = mysql_connect("localhost","root", "123");
 $connection = DBScheme::$connection;
 mysql_select_db(DBScheme::$db_name, DBScheme::$connection) or die("No db!!!");
 
