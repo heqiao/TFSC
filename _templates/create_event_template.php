@@ -18,6 +18,9 @@
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<div class="control-group">
 		<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
+		<% if (typeof(group_name) !== 'undefined') { %>
+			<input type="hidden" name="(session)(session_<%= session_num %>)groupName" class="sessionDesc" value="<%= group_name %>" >
+		<% } %>
 	</div>
 	<div class="control-group">
 	    <div class="add-speaker alert alert-success"></div>
@@ -28,7 +31,7 @@
 <script type="text/template" id="breakout-template-symp" charset="utf-8">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<h3>Breakout Session <%= breakout_num %></h3>
-	<input type='hidden' name='(session)(session_<%= session_num %>)sessionGroup' value='Breakout Session <%= breakout_num %>' />
+	<input type='hidden' class="breakout-session-view-group-name" value='Breakout Session <%= breakout_num %>' />
 	<div class="addSub"></div>
 	<button class="btn new-subsession" type="button">Add subSession</button>
 </script>	

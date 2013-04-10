@@ -4,6 +4,7 @@ require_once "_parts/db_settings.php";
 
 // HTML parts
 $page_stylesheet = "create_event.css";
+// $page_javascript = "";
 require_once "_parts/html_head.php";
 require_once "_parts/header.php";
 ?>

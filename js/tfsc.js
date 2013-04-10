@@ -64,7 +64,8 @@ $(document).ready(function () {
 		newSubSession: function () {
 			var subSessionView = new SympSessionView({
 				session_num: session_num,
-				speaker_num: speaker_num
+				speaker_num: speaker_num,
+				group_name: this.$('.breakout-session-view-group-name').val()
 			});
 			this.$('.addSub').before(subSessionView.el);
 			session_num ++;
@@ -83,7 +84,7 @@ $(document).ready(function () {
 //Symposium form view
 	var SymposiumFormView = Backbone.View.extend({
 		// HTML
-		el: $('#main-form-symposium'), 
+		el: $('#main-form-symposium'),
 
 		// Event
 		events: {
