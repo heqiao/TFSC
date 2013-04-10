@@ -270,7 +270,6 @@ require_once "_parts/header.php";
 	<script type="text/template" id="session-template-symp" charset="utf-8">
 		<div class="control-group">
 			<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
-				
 		</div>
 		<div class="control-group">
 		    <div class="add-speaker">
@@ -282,6 +281,7 @@ require_once "_parts/header.php";
 	<!-- Template for adding a breakout session for sumposium-->
 	<script type="text/template" id="breakout-template-symp" charset="utf-8">
 		<h3>Breakout Session <%= breakout_num %></h3>
+
 		<input type='hidden' name='(session)(session_<%= session_num %>)sessionGroup' value='Breakout Session <%= breakout_num %>' />
 		
 		<div class="addSub">
@@ -294,6 +294,6 @@ require_once "_parts/header.php";
 	<script type="text/template" id="speaker-template-symp" charset="utf-8">
 		<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
 		class="typeahead" class="sessionSpeaker" placeholder="Speaker">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<button type="button" class="close speaker" data-dismiss="alert">&times;</button>
 	</script>
 </div>

@@ -105,8 +105,11 @@ function PostParse($post)
 			}
 		}
 		$params[$key] = $sub_params;
+		
 	}
-	
+	echo "<pre>";
+				print_r($params);
+				echo "</pre>";
 	// Go deep
 	foreach ($params as $key => $val) {
 		if (is_array($val)) {
@@ -118,3 +121,14 @@ function PostParse($post)
 	return($params);
 }
 ?>
+<!-- 
+[session] => Array
+        (
+            [(session_1)sessionDesc] => d1
+            [(session_1)(speaker)(speaker_1)sessionSpeaker] => s1
+            [(session_1)(speaker)(speaker_2)sessionSpeaker] => s2
+            [(session_1)(speaker)(speaker_3)sessionSpeaker] => s3
+            [(session_2)sessionDesc] => d2
+            [(session_2)(speaker)(speaker_4)sessionSpeaker] => s11
+            [(session_2)(speaker)(speaker_5)sessionSpeaker] => s22
+        ) -->

@@ -1,10 +1,10 @@
 $(document).ready(function () {
 	// datepicker
-	$('.datepicker').datepicker({
+	$(".datepicker").datepicker({
 		dateFormat: 'yy-mm-dd'
 	});
 	var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
-	$('.typeahead').typeahead({
+	$(".typeahead").typeahead({
 		source: typeahead_source
 	});
 //view to add the sessions

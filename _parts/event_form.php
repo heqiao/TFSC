@@ -3,21 +3,21 @@
 <div class="control-group">
 	<label class="control-label" for="eventName<?php echo $event_type;?>">Event Name:</label>
 	<div class="controls">
-		<input type="text" name = "eventName" id="eventName<?php echo $event_type;?>"  placeholder="" required>
+		<input type="text" name = "eventName" id="eventName<?php echo $event_type;?>" placeholder="" required>
 	</div>
 </div>
 <!-- date -->
 <div class="control-group">
 	<label class="control-label" for="datepicker<?php echo $event_type;?>">Date:</label>
 	<div class="controls">
-		<input type="text" name = "datepicker" id="datepicker<?php echo $event_type;?>" class = "datepicker" placeholder="">
+		<input type="text" name = "datepicker" id="datepicker<?php echo $event_type;?>" class = "datepicker" placeholder="" required>
 	</div>
 </div>
 <!-- location -->
 <div class="control-group">
 	<label class="control-label" for="eventLoc<?php echo $event_type;?>">Location:</label>
 	<div class="controls">
-		<input type="text" name = "eventLoc" id="eventLoc<?php echo $event_type;?>" placeholder="">
+		<input type="text" name = "eventLoc" id="eventLoc<?php echo $event_type;?>" placeholder="" >
 	</div>
 </div>
 <!-- desc -->
