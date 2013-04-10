@@ -41,8 +41,4 @@ label{
     margin-bottom: 10px;
     /*border:1px solid silver;*/
 }
-.close{
-    float: none;
-    position: relative;
-}
-
+/*.alert .close{position:relative;top:-2px;right:-21px;line-height:20px;}*/

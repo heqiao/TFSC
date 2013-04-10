@@ -1,10 +1,10 @@
 $(document).ready(function () {
 	// datepicker
-	$('.datepicker').datepicker({
+	$(".datepicker").datepicker({
 		dateFormat: 'yy-mm-dd'
 	});
 	var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
-	$('.typeahead').typeahead({
+	$(".typeahead").typeahead({
 		source: typeahead_source
 	});
 //view to add the sessions
@@ -37,7 +37,7 @@ $(document).ready(function () {
 				session_num: session_num,
 				speaker_num: speaker_num
 			});
-			this.$('.add-speaker').before(speakerView.el);
+			this.$('.add-speaker').append(speakerView.el);
 			//$('.sessionSpeaker').focus();
 			speaker_num ++;
 		}
@@ -53,10 +53,10 @@ $(document).ready(function () {
 		initialize: function () {
 			this.$el.html(this.template(this.options));
 			var session_sec_num = this.$('.event-session alert alert-info');
-			//console.log(session_sec_num);			
+			//console.log(session_sec_num);	
+			// alert(session_sec_num.size());		
 			if(session_sec_num.size() == 0)
 			{
-
 				this.newSubSession();
 				//session_num++;
 			};
@@ -64,9 +64,10 @@ $(document).ready(function () {
 		newSubSession: function () {
 			var subSessionView = new SympSessionView({
 				session_num: session_num,
-				speaker_num: speaker_num
+				speaker_num: speaker_num,
+				group_name: this.$('.breakout-session-view-group-name').val()
 			});
-			$('.addSub').before(subSessionView.el);
+			this.$('.addSub').before(subSessionView.el);
 			session_num ++;
 		}
 	});
@@ -83,7 +84,7 @@ $(document).ready(function () {
 //Symposium form view
 	var SymposiumFormView = Backbone.View.extend({
 		// HTML
-		el: $('#main-form-symposium'), 
+		el: $('#main-form-symposium'),
 
 		// Event
 		events: {
