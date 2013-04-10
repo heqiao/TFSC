@@ -1,167 +1,115 @@
-<?php include("header.php");?>
+<?php
+require_once "_parts/functions.php";
+//require_once "_parts/db_settings.php";
+
+// HTML parts
+require_once "_parts/html_head.php";
+require_once "_parts/header.php";
+?>
 <!doctype html>
 <html lang="en">
 <head></head>
 <div class="container">
-  <div class="row">
-    <div class="threecol">
-      <!--  Contact Information -->
-      <address>
-      <p><img border="0" alt=" "  src="http://tfsc.uark.edu/WCTFSC_color_version.png" /> </p>
-      <p>Harmon Avenue Parking Facility<br />
-      146 N. Harmon Avenue<br />
-      HAPF-703<br />
-      Fayetteville, AR 72701</p>
-      <p>Lori L. Libbert<br />
-      Special Events Manager</p>
-      <p>P: 479-575-3222<br />
-      F: 479-575-7086<br />
-      <a  href="mailto:tfsc@uark.edu">tfsc@uark.edu</a></p>
-      </address>
-    </div>
+  <div class="row-fluid">
     <!-- Form to post data-->
-    <div class="sixcol centerPlate">
-        <h1>Teaching Assistant Luncheon Survey</h1>
-        <p><strong>Food for Thought: </strong>The TFSC Co-Directors are looking for feedback concerning our programming.
-          We gave you food, you give us thoughts. (See, there really is no such thing as a free lunch!)</p>
-        <FORM>           
-          </br>
-            <table align="center" witdh="100%">
-              <tr>
-                <td colspan = "5">
-                  1. On a scale of 1 to 5, with 1 being "very unsatisfied" and 5 being "very satisfied" please indicate your overall level of satisfaction with today's Teaching Assistant Lunch presentation.
-                </td>
-              </tr>
-              <tr>
-                <td height = "7px"></td>
-              </tr>
-              <tr>
-                <td  width="120px">
-                  Very Unsatisfied</br>
-                  1<input type = "radio" name ="TA1" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  2<input type = "radio" name ="TA1" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  3<input type = "radio" name ="TA1" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  4<input type = "radio" name ="TA1" value = "">
-                </td>
-                <td width="120px">
-                  Very Satisfied</br>
-                  5<input type = "radio" name ="TA1" value = "">
-                </td>
-              </tr>
-              <tr>
-                <td height = "20px"></td>
-              </tr>
-              <tr>
-                <td colspan = "5">
-                  2. How satisfied were you with the meal provided?
-                </td>                
-              </tr>
-              <tr>
-                <td height = "7px"></td>
-              </tr>
-              <tr>
-                <td  width="120px">
-                  Very Unsatisfied</br>
-                  1<input type = "radio" name ="TA2" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  2<input type = "radio" name ="TA2" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  3<input type = "radio" name ="TA2" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  4<input type = "radio" name ="TA2" value = "">
-                </td>
-                <td width="120px">
-                  Very Satisfied</br>
-                  5<input type = "radio" name ="TA2" value = "">
-                </td>
-              </tr>
-              <tr>
-                <td height = "20px"></td>
-              </tr>
-              <tr>
-                <td colspan = "5">
-                  3. What is the likelihood you would attend another Teaching Assistant Luncheon? 
-                </td>
-              </tr>
-              <tr>
-                <td height = "7px"></td>
-              </tr>
-              <tr>
-                <td  width="120px">
-                  Very Unlikely</br>
-                  1<input type = "radio" name ="TA3" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  2<input type = "radio" name ="TA3" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  3<input type = "radio" name ="TA3" value = "">
-                </td>
-                <td width="120px">
-                  </br>
-                  4<input type = "radio" name ="TA3" value = "">
-                </td>
-                <td width="120px">
-                  Very Likely</br>
-                  5<input type = "radio" name ="TA3" value = "">
-                </td>
-              </tr>
-              <tr>
-                <td height = "20px"></td>
-              </tr>
-              <tr>
-                <td colspan = "5">
-                  4. Recommendations for future Teaching Assistant Lunch topics: 
-                </td>
-              </tr>
-              <tr>
-                <td height = "7px"></td>
-              </tr>
-              <tr>
-                <td colspan ="5"><textarea rows="3" cols="63"></textarea></td>
-              </tr>
-              <tr>
-                <td height = "20px"></td>
-              </tr>
-              <tr>
-                <td colspan = "5">
-                  5. Additional Comments: 
-                </td>
-              </tr>
-              <tr>
-                <td height = "7px"></td>
-              </tr>
-              <tr>
-                <td colspan ="5"><textarea rows="3" cols="63"></textarea></td>
-              </tr>
-              <tr>
-                <td height = "40px"></td>
-              </tr>
-              <tr>
-                <td colspan ="5" align="center"><input type ="submit" name = "next" value = "Submit" style="height:30px;width:80px;font-size:15px;"/> </td>
-              </tr>
-            </table>         
-        </FORM> 
+    <div class="span7 offset2">
+        <h3><center>Teaching Assistant Luncheon Survey</center></h3>
+        <p><strong>Food for Thought: </strong>The TFSC Co-Directors are looking for feedback converning our programming.
+          We gave ou food, you give us thoughts. (See, there really is no such thing as a free lunch!)</p>
+         <form id="form" name="form" method= "POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+          <?php
+            //Connection string 
+            $connection = mysql_connect("localhost","root", "");
+            //Run the connection string to connecct to the databse
+            mysql_select_db("tfscdb", $connection) or die("Cannot open the database");
+            //set variable query for a query statement
+            $query = "select description, question_id, question_flag, number_of_choices from question where event_type = 'TA' order by 'order';";  
+            //execute the query           
+            $result = mysql_query($query, $connection) or die ("Could not execute sql: $query");
+            // get result record
+            $num_rows = mysql_num_rows($result);
+
+            $check = true; 
+            //read questions from database
+            for($i=0;$i<$num_rows;$i++)
+            {
+                $row = mysql_fetch_array($result);
+                $number = $i + 1;
+                echo "<p>".$number.". ".$row['description']."</p>"; 
+                //validation
+                if (isset($_POST['submit'])) {    
+                       if (!isset($_POST[$row['question_id']]))  
+                       {
+                         ?>
+                         <div class="alert alert-error">
+                             Please answer this question.
+                         </div>
+                         <?php                    
+                         $check = false;
+                       }                                    
+                   }               
+                //determine question format according to question flag
+                if($row['question_flag'] == 'R')
+                {
+                  if ($row['number_of_choices'] == 2) 
+                  {
+                    echo "<label class='radio'><input type = 'radio' name = '$row[question_id]' value = '1'";
+                    if ($_POST[$row['question_id']] == '1') 
+                      echo "checked";
+                    echo "> Yes </label>";
+                    echo "<label class='radio'><input type = 'radio' name = '$row[question_id]' value = '2'";
+                    if ($_POST[$row['question_id']] == '2') 
+                      echo "checked";
+                    echo "> No </label>";
+                  }                  
+                  else
+                  {
+                    for ($j=0; $j < $row['number_of_choices']; $j++) 
+                    { 
+                      $rate = $j+1;
+                      echo "<label class='radio'><input type = 'radio' name ='$row[question_id]' value = '$rate'";
+                      if ($_POST[$row['question_id']] == $rate) 
+                        echo "checked";
+                      echo ">".$rate."</label>";
+                    }
+                  }                
+                } 
+                else if ($row['question_flag'] == 'C') 
+                {
+                  echo "<textarea class = 'span12' name ='$row[question_id]' placeholder = 'Comments here...'></textarea>";                 
+                }                        
+            }
+            //insert data into database
+            // if (isset($_POST['submit'])) {
+            //   if ($check == true){
+            //     //execute the query           
+            //     $result = mysql_query($query, $connection) or die ("Could not execute sql: $query");
+            //     // get result record
+            //     $num_rows = mysql_num_rows($result);
+            //     //insert each line of answer
+            //     for ($j=0; $j<$num_rows ; $j++) { 
+            //       $row = mysql_fetch_array($result);                  
+            //       $answer = $_POST[$row['question_id']];
+            //       if ($row['question_flag'] == 'R'){
+            //         $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, $answer, null);";
+            //       }else if ($row['question_flag'] == 'C') {
+            //         if ($answer != null) {
+            //           $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, null, '$answer');";
+            //         }else{
+            //           $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, null, '');";                     
+            //         }
+            //       }  
+            //       $insert = mysql_query($sql, $connection) or die ("Could not excute sql $sql");                   
+            //     }
+            //     header("Location: thanks.php");
+            //   }    
+            // }
+          ?>
+          <center><button class ="btn" name = "submit"/>Submit</button></center>
+        </form>       
     </div>    
   </div>
 </div>
-
+<?php require_once "_parts/html_foot.php";?>
 </body>
 </html>
