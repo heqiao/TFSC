@@ -107,9 +107,7 @@ function PostParse($post)
 		$params[$key] = $sub_params;
 		
 	}
-	echo "<pre>";
-				print_r($params);
-				echo "</pre>";
+
 	// Go deep
 	foreach ($params as $key => $val) {
 		if (is_array($val)) {
