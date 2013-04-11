@@ -25,8 +25,7 @@ input[type="search"]{
 label{
     padding-top: 2px;
     display: inline-block;
-    width: 100px; 
-    float: left;
+    width: 100px;
 }
 .threecol{
     margin-right: 0px !important;
@@ -44,5 +43,8 @@ label{
 .close{
     float: none;
     position: relative;
+}
+.nf-form .radio {
+    margin-left: 0 !important;
 }
 

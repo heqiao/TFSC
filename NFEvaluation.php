@@ -12,7 +12,7 @@ require_once "_parts/header.php";
 <body>
 <div class="container">
   <div class ="row-fluid">
-    <div class = "span7 offset2">
+    <div class = "span7 offset2 nf-form">
         <!-- Form to post data-->
           <center><h3>New Faculty Luncheon Survey</h3></center>
           <p><strong>Food for Thought: </strong>The TFSC Co-Directors are looking for feedback concerning our programming.
@@ -50,17 +50,18 @@ require_once "_parts/header.php";
                   {
                     if ($row['number_of_choices'] == 2) 
                     {
-                      echo "<label class='radio inline'><input type = 'radio' name = '$row[question_id]' value = '1'";
+                      echo "<div><label class='radio inline'><input type = 'radio' name = '$row[question_id]' value = '1'";
                       if ($_POST[$row['question_id']] == '1') 
                         echo "checked";
                       echo "> Yes </label>";
                       echo "<label class='radio inline'><input type = 'radio' name = '$row[question_id]' value = '2'";
                       if ($_POST[$row['question_id']] == '2') 
                         echo "checked";
-                      echo "> No </label>";
+                      echo "> No </label></div>";
                     }                  
                     else
                     {
+                      echo "<div>";
                       for ($j=0; $j < $row['number_of_choices']; $j++) 
                       { 
                         $rate = $j+1;
@@ -69,6 +70,7 @@ require_once "_parts/header.php";
                           echo "checked";
                         echo ">".$rate."</label>";
                       }
+                      echo "</div>";
                     }               
                   } 
                   else if ($row['question_flag'] == 'C') 
