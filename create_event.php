@@ -30,8 +30,12 @@ require_once "_parts/header.php";
 			"contact_phone" => $post['eventContactPhone']
 		));
 		$event->save();
-		$id = $event->id;
-		echo "http://localhost/nf_evaluation.php?id=$id";	
+		$id_ta= $event->id;
+		if (isset($id_ta)) {
+			$message = "Event has been created successfully!";
+			$url = "http://localhost/ta_evaluation.php?id=$id_ta";	
+		}
+		
 	}
 	//The luncheon form is submitted
 	if(isset($_POST['submitEvent-luncheon'])){
@@ -49,6 +53,11 @@ require_once "_parts/header.php";
 			"contact_phone" => $post['eventContactPhone']
 		));
 		$event->save();	
+		$id_nf= $event->id;
+		if (isset($id_nf)) {
+			$message = "Event has been created successfully!";
+			$url = "http://localhost/nf_evaluation.php?id=$id_nf";	
+		}
 	}
 	//The symposium form is submitted		  
 	if(isset($_POST['submitEvent-symp'])){         
@@ -90,6 +99,11 @@ require_once "_parts/header.php";
 				$new_session->add_speaker($new_speaker);
 			}
 		}
+		$id_sy= $event->id;
+		if (isset($id_sy)) {
+			$message = "Event has been created successfully!";
+			$url = "http://localhost/sy_evaluation.php?id=$id_sy";	
+		}
 	}
 	//The retreat form is submitted		  
 	if(isset($_POST['submitEvent-retreat'])){         
@@ -116,6 +130,11 @@ require_once "_parts/header.php";
 			));
 			$event->add_session($new_session);
 			$session_order++;
+		}
+		$id_rt= $event->id;
+		if (isset($id_rt)) {
+			$message = "Event has been created successfully!";
+			$url = "http://localhost/rt_evaluation.php?id=$id_rt";	
 		}
 	}
 	//The orientation form is submitted		  
@@ -144,6 +163,11 @@ require_once "_parts/header.php";
 			));
 			$event->add_session($new_session);
 			$session_order++;
+		}
+		$id_or= $event->id;
+		if (isset($id_or)) {
+			$message = "Event has been created successfully!";
+			$url = "http://localhost/or_evaluation.php?id=$id_or";	
 		}
 	}		    	
 ?>
@@ -175,7 +199,17 @@ require_once "_parts/header.php";
 								$event_type = "-ta"; //Define distingush id in the form
 								include("_parts/event_form.php"); 
 							?> 
-						</form>	    	 
+						</form>
+						<?php if (isset($id_ta)) {
+							echo '<div class="alert alert-success">';
+							echo '<button type="button" class="close success" data-dismiss="alert">&times;</button>';
+							echo $message;
+							echo "<p>";
+							echo "Evaluation form: <a href =$url>$url</a>";
+							echo "</p>"; 
+							echo '</div>';
+						}
+						?>	    	 
 				    </div>
 					
 				    <!-- Second tab luncheon-->
@@ -186,6 +220,16 @@ require_once "_parts/header.php";
 								include("_parts/event_form.php"); 
 							?> 
 						</form>
+						<?php if (isset($id_nf)) {
+							echo '<div class="alert alert-success">';
+							echo '<button type="button" class="close success" data-dismiss="alert">&times;</button>';
+							echo $message;
+							echo "<p>";
+							echo "Evaluation form: <a href =$url>$url</a>";
+							echo "</p>"; 
+							echo '</div>';
+						}
+						?>	
 				    </div>
 					
 				    <!-- Third tab Symposium-->
@@ -211,7 +255,16 @@ require_once "_parts/header.php";
 								</div>
 							</div>
 						</form>
-						
+						<?php if (isset($id_sy)) {
+							echo '<div class="alert alert-success">';
+							echo '<button type="button" class="close success" data-dismiss="alert">&times;</button>';
+							echo $message;
+							echo "<p>";
+							echo "Evaluation form: <a href =$url>$url</a>";
+							echo "</p>"; 
+							echo '</div>';
+						}
+						?>	
 				    </div>
 				    <!-- Fourth tab Retreat-->
 				    <div class="tab-pane" id="tab-retreat">
@@ -236,7 +289,17 @@ require_once "_parts/header.php";
 									</div>
 								</div>
 							</div>
-						</form>			
+						</form>
+						<?php if (isset($id_rt)) {
+							echo '<div class="alert alert-success">';
+							echo '<button type="button" class="close success" data-dismiss="alert">&times;</button>';
+							echo $message;
+							echo "<p>";
+							echo "Evaluation form: <a href =$url>$url</a>";
+							echo "</p>"; 
+							echo '</div>';
+						}
+						?>				
 				    </div>
 				    <!-- Fifth tab Orientation-->
 				    <div class="tab-pane" id="tab-orientation">
@@ -258,7 +321,17 @@ require_once "_parts/header.php";
 									</div>
 								</div>
 							</div>
-						</form>	
+						</form>
+						<?php if (isset($id_or)) {
+							echo '<div class="alert alert-success">';
+							echo '<button type="button" class="close success" data-dismiss="alert">&times;</button>';
+							echo $message;
+							echo "<p>";
+							echo "Evaluation form: <a href =$url>$url</a>";
+							echo "</p>"; 
+							echo '</div>';
+						}
+						?>		
 				    </div>
 				</div>
 			</div>
@@ -316,7 +389,6 @@ require_once "_parts/header.php";
 		<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
 		class="sessionSpeaker" placeholder="Speaker">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<input type="text" class ="try" data-provide="typeahead">
 		
 	</script>
 </div>
