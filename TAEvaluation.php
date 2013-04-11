@@ -40,11 +40,7 @@ require_once "_parts/header.php";
                 if (isset($_POST['submit'])) {    
                        if (!isset($_POST[$row['question_id']]))  
                        {
-                         ?>
-                         <div class="alert alert-error">
-                             Please answer this question.
-                         </div>
-                         <?php                    
+                         echo "<div class='alert alert-error'>Please answer this question.</div>";                    
                          $check = false;
                        }                                    
                    }               
@@ -79,31 +75,31 @@ require_once "_parts/header.php";
                   echo "<textarea class = 'span12' name ='$row[question_id]' placeholder = 'Comments here...'></textarea>";                 
                 }                        
             }
-            //insert data into database
-            // if (isset($_POST['submit'])) {
-            //   if ($check == true){
-            //     //execute the query           
-            //     $result = mysql_query($query, $connection) or die ("Could not execute sql: $query");
-            //     // get result record
-            //     $num_rows = mysql_num_rows($result);
-            //     //insert each line of answer
-            //     for ($j=0; $j<$num_rows ; $j++) { 
-            //       $row = mysql_fetch_array($result);                  
-            //       $answer = $_POST[$row['question_id']];
-            //       if ($row['question_flag'] == 'R'){
-            //         $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, $answer, null);";
-            //       }else if ($row['question_flag'] == 'C') {
-            //         if ($answer != null) {
-            //           $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, null, '$answer');";
-            //         }else{
-            //           $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, null, '');";                     
-            //         }
-            //       }  
-            //       $insert = mysql_query($sql, $connection) or die ("Could not excute sql $sql");                   
-            //     }
-            //     header("Location: thanks.php");
-            //   }    
-            // }
+            insert data into database
+            if (isset($_POST['submit'])) {
+              if ($check == true){
+                //execute the query           
+                $result = mysql_query($query, $connection) or die ("Could not execute sql: $query");
+                // get result record
+                $num_rows = mysql_num_rows($result);
+                //insert each line of answer
+                for ($j=0; $j<$num_rows ; $j++) { 
+                  $row = mysql_fetch_array($result);                  
+                  $answer = $_POST[$row['question_id']];
+                  if ($row['question_flag'] == 'R'){
+                    $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, $answer, null);";
+                  }else if ($row['question_flag'] == 'C') {
+                    if ($answer != null) {
+                      $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, null, '$answer');";
+                    }else{
+                      $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[question_id], 3, null, null, '');";                     
+                    }
+                  }  
+                  $insert = mysql_query($sql, $connection) or die ("Could not excute sql $sql");                   
+                }
+                header("Location: thanks.php");
+              }    
+            }
           ?>
           <center><button class ="btn" name = "submit"/>Submit</button></center>
         </form>       

@@ -12,22 +12,9 @@ require_once "_parts/header.php";
 </head>
 <body>
 <div class="container">
-  <div class="row">
-	<div class="threecol">
-	  <!--  Contact Information -->
-	  <address>
-	  <p><img border="0" alt=" "  src="http://tfsc.uark.edu/WCTFSC_color_version.png" /> </p>
-	  <p>Harmon Avenue Parking Facility<br />
-	  146 N. Harmon Avenue<br />
-	  HAPF-703<br />
-	  Fayetteville, AR 72701</p>
-	  <p>Lori L. Libbert<br />
-	  Special Events Manager</p>
-	  <p>P: 479-575-3222<br />
-	  F: 479-575-7086<br />
-	  <a  href="mailto:tfsc@uark.edu">tfsc@uark.edu</a></p>
-	  </address>
-	</div>
+  <div class ="row-fluid">
+    <div class = "span7 offset2">
+
 	<!-- Form to post data-->
 	<div class="sixcol centerPlate">
 		<center><h3>Teaching Retreat Evaluation Form</h3></center>
@@ -37,7 +24,6 @@ require_once "_parts/header.php";
 		  great time at camp!</p>
 
 		<form id="form" name="form" method= "POST" class="form" action="<?php echo $_SERVER['PHP_SELF'];?>">
-		  <table align="center" witdh="100%">
 		  <?php
 			//set variable query for query statements
 			$query1 = "select Question_ID, Description, Question_Flag, Number_of_Choices, Group_Description, `Group` from question where Event_Type = 'RETREAT' and `Group` = 'ACCOMMODATION' order by `Order`;"; 
@@ -68,9 +54,8 @@ require_once "_parts/header.php";
 			$num_rows = mysql_num_rows($result);
 			// get the group description
 			$titlerow = mysql_fetch_array($titleresult);
-			$title = $titlerow['Group_Description'];
 			//display titles
-			echo "<tr><td colspan = '6'><strong>$title</strong></br></br></td></tr>";
+			echo "<h5>".$titlerow['Group_Description']."</h5>";
 			if ($titlerow['Group'] == "INDIVIDUAL") {
 				//useful queries
 				$query1 = "select * from session where Event_ID = 3;";
@@ -85,8 +70,6 @@ require_once "_parts/header.php";
 			{
 				readQuestion($num_rows, $result);
 			}
-			//Close the connection to the database   
-			mysql_close();
 		  }
 		  function readSession($num_rows, $result)
 		  {
@@ -97,24 +80,24 @@ require_once "_parts/header.php";
 			$groupName = "";
 			for ($i=0; $i < $num_rows; $i++) 
 			{ 				
-				echo "<tr><td colspan = '6'>";
 				$row = mysql_fetch_array($result);
 				if ($row['Group_Name'] == null) {	
+					echo "<p>";
 					echo $i + 1;
 					echo ". ";
-					echo $row['Title'];
+					echo $row['Title']."</p>";
 					sessionQuestion($row['Session_ID']);
 				}
 				else {
 					if ($row['Group_Name'] != $groupName) {						
-						echo "<strong>Optional Session: </strong></br>";
+						echo "<h5>Optional Session: </h5>";
 						$groupName = $row['Group_Name'];
 						$groupQuery = "select * from session where Group_name = '$groupName' order by `Order`;";
 						$groupResult = mysql_query($groupQuery, $connection) or die ("Could not execute sql: $groupQuery");						
 						// get result record
 						$num_groupRows = mysql_num_rows($groupResult);
 						$selectname = "select".$groupRow['Session_ID'];
-						echo "<select name = '$selectname'>";
+						echo "<select class = 'span12' name = '$selectname'>";
 						echo "<option value = '0'>Choose Session</option>";
 						for ($h=0; $h < $num_groupRows; $h++) { 
 							$rate = $h + 1;
@@ -128,38 +111,31 @@ require_once "_parts/header.php";
 						//validation
 						if (isset($_POST['submit'])) {    
 							  if ($_POST[$selectname] == 0)               
-								echo "</br><strong style='color: red;'>Please select a session.</strong>";
+			                     echo "<div class='alert alert-error'>Please answer this question.</div>";
 						}
 						sessionQuestion($groupRow['Session_ID']);							
 					}
 				}									
 			}
-			echo "<tr><td height = '20px'></td></tr>";  
 		 }
 		 function sessionQuestion($sessionID)
 		  {
-		  	//dispay questions from database
-				echo "</td><tr><td colspan = '6'>";
 				//validation
 				if (isset($_POST['submit'])) {    
 					  if (!isset($_POST[$sessionID]))               
-						echo "<strong style='color: red;'>Please answer this question.</strong>";
+						echo "<div class='alert alert-error'>Please answer this question.</div>";
 				}
-				echo "</td></tr><tr><td height = '7px'></td></tr><tr>";				
+				//dispay questions from database			
 				for ($j=0; $j < 5; $j++) 
 				{ 
-					echo "<td width='120px'>";
 			        $rate = $j+1;
 			        echo "<label class='radio'><input type = 'radio' name = '$sessionID' value = '$rate' ";
 			        if ($_POST[$sessionID] == $rate) 
 			            echo "checked";
-			         echo ">".$rate."</label>";
-			         echo "</td>"; 
-			                            
+			         echo ">".$rate."</label>";			                            
 				}
-				echo "</tr>";
 				$textarea = "textarea".$sessionID;
-				echo "<td colspan ='4'><textarea name ='$testarea' placeholder = 'Comments here...'></textarea></td></tr>";	
+				echo "<textarea class='span12' name ='$testarea' placeholder = 'Comments here...'></textarea>";	
 		  }
 
 		  function readQuestion($num_rows, $result)
@@ -167,78 +143,59 @@ require_once "_parts/header.php";
 		  	//read questions from database
 			for($i=0;$i<$num_rows;$i++)
 			{               
-				echo "<tr><td colspan = '6'>";
 				$row = mysql_fetch_array($result);
+				echo "<p>";
 				echo $i + 1;
 				echo ". ";
-				echo $row['Description'];
-				echo "</br>";
+				echo $row['Description']."</p>";
 				//validation
 				if (isset($_POST['submit'])) {    
 					  if (!isset($_POST[$row['Question_ID']]))                
-						echo "<strong style='color: red;'>Please answer this question.</strong>";
-				}
-				echo "</td></tr><tr><td height = '7px'></td></tr><tr>";  
+						echo "<div class='alert alert-error'>Please answer this question.</div>";
+				} 
 
 				//determine question format according to question flag
 				if($row['Question_Flag'] == 'R')
 				{
 				  if ($row['Number_of_Choices'] == 2) 
 				  {  
-					echo "<td width='120px'><label class='radio'><input type = 'radio' name = '$row[Question_ID]' value = '1' ";
+					echo "<label class='radio'><input type = 'radio' name = '$row[Question_ID]' value = '1' ";
                     if ($_POST[$row['Question_ID']] == '1') 
                       echo "checked";
-                    echo "> Yes </label></td>";
-                    echo "<td width='120px'><label class='radio'><input type = 'radio' name = '$row[Question_ID]' value = '2' ";
+                    echo "> Yes </label>";
+                    echo "<label class='radio'><input type = 'radio' name = '$row[Question_ID]' value = '2' ";
                     if ($_POST[$row['Question_ID']] == '2') 
                       echo "checked";
-                    echo "> No </label></td>";					
+                    echo "> No </label>";					
 				  }                  
 				  else
 				  {
 					for ($j=0; $j < $row['Number_of_Choices']; $j++) 
 					{ 
-					  echo "<td width='120px'>";
                       $rate = $j+1;
                       echo "<label class='radio'><input type = 'radio' name ='$row[Question_ID]' value = '$rate' ";
                       if ($_POST[$row['Question_ID']] == $rate) 
                         echo "checked";
                       echo ">".$rate."</label>";
-                      echo "</td>";
 					}
-				  } 
-				  echo "</tr>";            
+				  }           
 				} 
 				else if ($row['Question_Flag'] == 'C') 
 				{
-				  echo "<td colspan ='4'><textarea name ='$row[Question_ID]' placeholder = 'Comments here...'></textarea></td>";           
-				}
-				echo "<tr><td height = '20px'></td></tr>";          
-			}
-		  }
-	?>          
-			  <tr>
-				<td height = "20px"></td>
-			  </tr> 
-			  <tr>
-				<td colspan = '6'>
-					<label class="checkbox">
-				      <input type="checkbox" name="checkbox" value ="yes" <?php if($_POST['checkbox'] == 'yes') echo "checked" ?>> 
+				  echo "<textarea class='span12' name ='$row[Question_ID]' placeholder = 'Comments here...'></textarea>";           
+				}     
+			  }
+		  	}
+		?>          
+				
+			<input class = 'checkbox' type="checkbox" name="checkbox" value ="yes" <?php if($_POST['checkbox'] == 'yes') echo "checked" ?>> 
 				      <strong>Please check here if you are a first time camper.</strong>
-				    </label> 
-				</td>
-			  </tr>      
-			  <tr>
-				<td height = "40px"></td>
-			  </tr>
-			  <tr>
-				<td colspan ="6" align="center"><input type ="submit" name = "submit" value = "Submit" style="height:30px;width:80px;font-size:15px;"/> </td>
-			  </tr>
-		  </table>
+ 
+				<center><button class ="btn" name = "submit"/>Submit</button></center>
 		</form>       
 	</div>    
   </div>
 </div>
-
+<?php require_once "_parts/html_foot.php";?>
 </body>
 </html>
