@@ -4,7 +4,7 @@ $(document).ready(function () {
 		dateFormat: 'yy-mm-dd'
 	});
 	var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
-	$(".typeahead").typeahead({
+	$(".sessionSpeaker").typeahead({
 		source: typeahead_source
 	});
 //view to add the sessions
