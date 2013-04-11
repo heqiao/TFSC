@@ -69,7 +69,7 @@ require_once "_parts/header.php";
 		foreach ($post['session'] as $key => $session) {
 			$new_session = new Session(array(
 				'title' => $session['sessionDesc'],
-				'group_name' => $session['sessionGroup'],
+				'group_name' => $session['groupName'],
 				'order' => $session_order
 			));
 			$event->add_session($new_session);
@@ -132,7 +132,9 @@ require_once "_parts/header.php";
 		$event->save();
 		foreach ($post['session'] as $key => $session) {
 			$new_session = new Session(array(
-				'title' => $session['sessionTitle']
+				'title' => $session['sessionTitle'],
+				'group_name' => $session['sessionPart']
+				
 			));
 			$event->add_session($new_session);
 
@@ -251,10 +253,16 @@ require_once "_parts/header.php";
 			</div>
 		</div>
 	</div>
-	<!-- Template for add a new session for symposium-->
+	<!-- Template for add a new session for orientation-->
 	<script type="text/template" id="session-template-orient" charset="utf-8">
 		<div class="control-group">
 			<input type="text" name="(session)(session_<%= session_num %>)sessionTitle" class="sessionDesc" placeholder="Title">
+		</div>
+		<div class="control-group">
+			<select name = "sessionPart">
+		  		<option>Morning Session</option>
+		  		<option>Afternoon Session</option>
+			</select>
 		</div>									
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>
@@ -270,6 +278,9 @@ require_once "_parts/header.php";
 	<script type="text/template" id="session-template-symp" charset="utf-8">
 		<div class="control-group">
 			<input type="text" name="(session)(session_<%= session_num %>)sessionDesc" class="sessionDesc" placeholder="Description">
+			<% if (typeof(group_name) !== 'undefined') { %>
+      		<input type="hidden" name="(session)(session_<%= session_num %>)groupName" class="sessionDesc" value="<%= group_name %>" >
+    		<% } %>
 		</div>
 		<div class="control-group">
 		    <div class="add-speaker">
@@ -278,10 +289,11 @@ require_once "_parts/header.php";
 		</div>									
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>
-	<!-- Template for adding a breakout session for sumposium-->
+	<!-- Template for adding a breakout session for sumposium
+	-->
 	<script type="text/template" id="breakout-template-symp" charset="utf-8">
 		<h3>Breakout Session <%= breakout_num %></h3>
-		<input type='hidden' name='(session)(session_<%= session_num %>)sessionGroup' value='Breakout Session <%= breakout_num %>' />
+		<input type='hidden' class="breakout-session-view-group-name" value='Breakout Session <%= breakout_num %>' />
 		<div class="addSub">
 				
 		</div>
@@ -291,7 +303,7 @@ require_once "_parts/header.php";
 	<!-- Template for adding a speaker -->
 	<script type="text/template" id="speaker-template-symp" charset="utf-8">
 		<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
-		class="typeahead" class="sessionSpeaker" placeholder="Speaker">
+		class="sessionSpeaker" placeholder="Speaker">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	</script>
 </div>

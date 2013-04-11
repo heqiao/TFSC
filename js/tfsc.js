@@ -4,7 +4,7 @@ $(document).ready(function () {
 		dateFormat: 'yy-mm-dd'
 	});
 	var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
-	$(".typeahead").typeahead({
+	$(".sessionSpeaker").typeahead({
 		source: typeahead_source
 	});
 //view to add the sessions
@@ -64,7 +64,8 @@ $(document).ready(function () {
 		newSubSession: function () {
 			var subSessionView = new SympSessionView({
 				session_num: session_num,
-				speaker_num: speaker_num
+				speaker_num: speaker_num,
+				group_name: this.$('.breakout-session-view-group-name').val()
 			});
 			this.$('.addSub').before(subSessionView.el);
 			session_num ++;
