@@ -29,7 +29,9 @@ require_once "_parts/header.php";
 			"contact_email" => $post['eventContactEmail'],
 			"contact_phone" => $post['eventContactPhone']
 		));
-		$event->save();	
+		$event->save();
+		$id = $event->id;
+		echo "http://localhost/nf_evaluation.php?id=$id";	
 	}
 	//The luncheon form is submitted
 	if(isset($_POST['submitEvent-luncheon'])){
@@ -105,12 +107,15 @@ require_once "_parts/header.php";
 			"contact_phone" => $post['eventContactPhone']
 		));
 		$event->save();
+		$session_order = 1;
 		foreach ($post['session'] as $key => $session) {
 			$new_session = new Session(array(
 				'title' => $session['sessionTitle'],
-				'group_name' => $session['sessionGroup']
+				'group_name' => $session['sessionGroup'],
+				'order' => $session_order
 			));
 			$event->add_session($new_session);
+			$session_order++;
 		}
 	}
 	//The orientation form is submitted		  
@@ -129,13 +134,16 @@ require_once "_parts/header.php";
 			"contact_phone" => $post['eventContactPhone']
 		));
 		$event->save();
+		$session_order = 1;
 		foreach ($post['session'] as $key => $session) {
 			$new_session = new Session(array(
 				'title' => $session['sessionTitle'],
-				'group_name' => $session['sessionPart']
+				'group_name' => $session['sessionPart'],
+				'order' => $session_order
 				
 			));
 			$event->add_session($new_session);
+			$session_order++;
 		}
 	}		    	
 ?>
@@ -262,7 +270,7 @@ require_once "_parts/header.php";
 			<input type="text" name="(session)(session_<%= session_num %>)sessionTitle" class="sessionDesc" placeholder="Title">
 		</div>
 		<div class="control-group">
-			<select name = "sessionPart">
+			<select name = "(session)(session_<%= session_num %>)sessionPart">
 		  		<option>Morning Session</option>
 		  		<option>Afternoon Session</option>
 			</select>
@@ -308,5 +316,7 @@ require_once "_parts/header.php";
 		<input type="text" name="(session)(session_<%= session_num %>)(speaker)(speaker_<%= speaker_num %>)sessionSpeaker" 
 		class="sessionSpeaker" placeholder="Speaker">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<input type="text" class ="try" data-provide="typeahead">
+		
 	</script>
 </div>
