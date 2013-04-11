@@ -25,7 +25,8 @@ input[type="search"]{
 label{
     padding-top: 2px;
     display: inline-block;
-    width: 100px;
+    width: 100px; 
+    float: left;
 }
 .threecol{
     margin-right: 0px !important;
@@ -40,11 +41,4 @@ label{
     margin-bottom: 10px;
     /*border:1px solid silver;*/
 }
-.close{
-    float: none;
-    position: relative;
-}
-.nf-form .radio {
-    margin-left: 0 !important;
-}
-
+/*.alert .close{position:relative;top:-2px;right:-21px;line-height:20px;}*/

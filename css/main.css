@@ -10,8 +10,10 @@
    Overall adjustment
    ========================================================================== */
 
-body {
-	margin-top: 40px;
+@media (min-width: 981px) {
+	body {
+		padding-top: 40px;
+	}
 }
 
 /* ==========================================================================
@@ -37,6 +39,18 @@ body {
 .banner-uark {
 	background: #4D000A url(http://www.uark.edu/inc/css/banner.png) no-repeat;
 	min-height: 129px;
+}
+@media (max-width: 979px) and (min-width: 768px) {
+	.banner-uark {
+		margin-top: -20px;
+	}
+}
+@media (max-width: 767px) {
+	.banner-uark {
+		margin-top: -20px;
+		margin-right: -20px;
+		margin-left: -20px;
+	}
 }
 
 .banner-uark-link-homepage {

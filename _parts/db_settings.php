@@ -1,7 +1,7 @@
 <?php
 class DBScheme {
 	// DB structure
-	public static $db_name = "tfsc";
+	public static $db_name = "tfscdb";
 	public static $tables = array(
 		"event" => array(
 			"name", 
@@ -35,12 +35,12 @@ class DBScheme {
 		)
 	);
 	// db connection
-	public static $con;
+	public static $connection;
 }
 
-DBScheme::$con = mysql_connect("localhost","root", "");
-$connection = DBScheme::$con;
-mysql_select_db(DBScheme::$db_name, DBScheme::$con) or die("No db!!!");
+DBScheme::$connection = mysql_connect("localhost","root", "123");
+$connection = DBScheme::$connection;
+mysql_select_db(DBScheme::$db_name, DBScheme::$connection) or die("No db!!!");
 
 
 /**
@@ -50,9 +50,14 @@ mysql_select_db(DBScheme::$db_name, DBScheme::$con) or die("No db!!!");
 require_once "active_module.php";
 
 class Event extends ActiveModule {
-	public $has_many = array('session');
+	protected $has_many = array('session');
 }
 
 class Session extends ActiveModule {
-	public $belongs_to = array('event');
+	protected $belongs_to = array('event');
+	protected $has_many_and_belongs_to = array('speaker');
+}
+
+class Speaker extends ActiveModule {
+	protected $has_many_and_belongs_to = array('session');
 }

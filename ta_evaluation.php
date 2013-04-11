@@ -1,14 +1,12 @@
 <?php
-require_once "_parts/functions.php";
-//require_once "_parts/db_settings.php";
+include("_parts/functions.php");
+// include("_parts/connection.php");
 
 // HTML parts
-require_once "_parts/html_head.php";
-require_once "_parts/header.php";
+include("_parts/html_head.php");
+include("_parts/header.php");
 ?>
-<!doctype html>
-<html lang="en">
-<head></head>
+
 <div class="container">
   <div class="row-fluid">
     <!-- Form to post data-->
@@ -106,6 +104,5 @@ require_once "_parts/header.php";
     </div>    
   </div>
 </div>
-<?php require_once "_parts/html_foot.php";?>
-</body>
-</html>
+
+<?php include("_parts/html_foot.php");
