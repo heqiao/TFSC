@@ -1,15 +1,12 @@
 <?php
 require_once "_parts/functions.php";
-//require_once "_parts/db_settings.php";
+require_once "_parts/db_settings.php";
 
 // HTML parts
 require_once "_parts/html_head.php";
 require_once "_parts/header.php";
 ?>
-<!doctype html>
-<html lang="en">
-<head></head>
-<body>
+
 <div class="container">
   <div class ="row-fluid">
     <div class = "span7 offset2 nf-form">
@@ -102,13 +99,23 @@ require_once "_parts/header.php";
                   }
                   header("Location: thanks.php");
                 } 
-              }
-            ?>
-             <center><button class ="btn" name = "submit"/>Submit</button></center>
-          </form>
-    </div>
-   </div>
-</div>           
-<?php require_once "_parts/html_foot.php";?>
-</body>
-</html>
+                else if ($row['question_flag'] == 'C') 
+                {
+                  echo "<td colspan ='5'><textarea rows='3' cols='63'></textarea></td></tr>";                
+                }               
+                echo "<tr><td height = '20px'></td></tr>";          
+            }
+          ?>
+              <tr>
+                <td height = "40px"></td>
+              </tr>
+              <tr>
+                <td colspan ="5" align="center"><input type ="submit" name = "next" value = "Submit" style="height:30px;width:80px;font-size:15px;"/> </td>
+              </tr>
+          </table>
+        </form>       
+    </div>    
+  </div>
+</div>
+
+<?php require_once "_parts/html_foot.php";
