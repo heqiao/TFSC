@@ -72,10 +72,10 @@ require_once "_parts/header.php";
                 } 
                 else if ($row['question_flag'] == 'C') 
                 {
-                  echo "<textarea class = 'span12' name ='$row[question_id]' placeholder = 'Comments here...'></textarea>";                 
+                  echo "<textarea class = 'span10' name ='$row[question_id]' placeholder = 'Comments here...'></textarea>";                 
                 }                        
             }
-            insert data into database
+            //insert data into database
             if (isset($_POST['submit'])) {
               if ($check == true){
                 //execute the query           

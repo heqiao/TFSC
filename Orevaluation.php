@@ -106,11 +106,7 @@ require_once "_parts/header.php";
                     {    
                     if (!isset($_POST[$row['0']]))
                     {
-                      ?>
-                         <div class="alert alert-error">
-                             Please answer this question.
-                         </div>
-                         <?php
+                      echo "<div class='alert alert-error'>Please answer this question.</div>";
                       $check = false;
                     }                                  
                  }         
@@ -119,7 +115,7 @@ require_once "_parts/header.php";
                   else
                     {
                       $textarea = $row['0'].$groupName;
-                      echo "<textarea class = 'span12' name = '".$textarea."'></textarea>";  
+                      echo "<textarea class = 'span10' name = '".$textarea."'></textarea>";  
                     }
                }
 
@@ -151,11 +147,7 @@ require_once "_parts/header.php";
                      echo "<p>".$row1['2']."</p>";
                       if (isset($_POST['submit'])) {    
                             if (!isset($_POST[$row1['0']])){
-                              ?>
-                               <div class="alert alert-error">
-                                   Please answer this question.
-                               </div>
-                              <?php
+                              echo "<div class='alert alert-error'>Please answer this question.</div>";
                               $check = false;
                             } 
                       }
@@ -191,7 +183,7 @@ require_once "_parts/header.php";
                     else if ($row1['4'] == 'C') 
                     {
                       $textarea = $row['0'].$groupName;
-                      echo "<textarea class = 'span12' name ='".$textarea."' rows='3' cols='63'></textarea>";              
+                      echo "<textarea class = 'span10' name ='".$textarea."' rows='3' cols='63'></textarea>";              
                     }
                   }          
                 }  
@@ -244,7 +236,7 @@ require_once "_parts/header.php";
                   } 
                   else if ($row['3'] == 'C') 
                   {
-                    echo "<textarea class = 'span12' name ='".$row[0]."'></textarea>";              
+                    echo "<textarea class = 'span10' name ='".$row[0]."'></textarea>";              
                   }       
               }
             
