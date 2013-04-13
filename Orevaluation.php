@@ -13,52 +13,79 @@ require_once "_parts/header.php";
 <div class="container">
   <div class ="row-fluid">
     <div class = "span7 offset2">
+      <?php
+        $encode = $_GET['id'];
+                      
+        $urlenc = new Encryption();           
+        $id = $urlenc->decode("$encode");
+      ?>
     <!-- Form to post data-->
-    <h3>New Faculty Orientation Survey</h3>
-     <p>Please rate the following questions on a scale of 1 to 5, with 1 being “very unsatisfied” 
-          and 5 being “very satisfied”.</p>
-    <h4>New Faculty Orientation - Morning Sessions Evaluation</h4>
-  <form id="form" name="form" method= "POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+  <form id="form" name="form" method= "POST" action="orevaluation.php?id=<?php echo $encode;?>">
     <?php
+    //Query to pull event information
+      $query = "select * FROM `event` WHERE id =$id";
+
+          //Get connection
+            $connection = mysql_connect("localhost","root", "");
+          //Run the connection string to connecct to the databse
+            mysql_select_db("tfscdb", $connection) or die("Cannot open the database"); 
+            //execute the query  $result= used for date only; $result1 = used for rest of code         
+            $result = mysql_query($query, $connection) or die ("Could not execute sql: $query");
+
+            //Get result to get date
+            $row = mysql_fetch_array($result);
+
+            echo "<center><h3>$row[name] Survey</h3></center>";
+            echo "<p>Please rate the following questions on a scale of 1 to 5, with 1 being “very unsatisfied” 
+                      and 5 being “very satisfied”.</p>";
+            echo "<h4>New Faculty Orientation - Morning Sessions Evaluation</h4>";
       //Variable to check if all required fields are filled, 
-      $check = true;
+      $check = "true";
 
       //Query to pull back questions for Morning Session
-      $query1="sELECT *
-                FROM Question
-                WHERE event_type = 'Orientation'
+      $query1= "select *
+                FROM question q join event e 
+                on e.event_type = q.event_type
+                WHERE e.event_type = 'Orientation'
                 AND question_flag = 'R'
+                and e.id = $id 
                 ORDER BY 'order';";
       
       //Query to pull back questions for Afternoon Session
-      $query3 = "sELECT *
-                  FROM Question
-                  WHERE event_type = 'Orientation'
+      $query3 = "select *
+                  FROM question q join event e 
+                  on e.event_type = q.event_type 
+                  WHERE e.event_type = 'Orientation'
                   AND `order` <>1
                   AND question_flag = 'R'
+                  and e.id = $id 
                   ORDER BY 'order' ";
 
       //Query to pull back comment questions 
-      $query4 = "sELECT *
-                  FROM Question
-                  WHERE event_type = 'Orientation'
+      $query4 = "select *
+                  FROM question q join event e 
+                  on e.event_type = q.event_type
+                  WHERE e.event_type = 'Orientation'
                   AND question_flag = 'C'
-                  ORDER BY 'order' ";      
+                  and e.id = $id 
+                  ORDER BY 'order' ";     
      
       //Call function to pull back questions within the morning session
       DisplayQues($query1, "Morning Session");
+    
 
       echo "<h4>New Faculty Orientation - Afternoon Sessions Evaluation</h4>";
       
       //Call function to pull back questions within the afternoon session
       DisplayQues($query3,"Afternoon Session");   
-
+      
       //Call function to pull back comment questions
-      DisplayGeneric($query4);    
-  
+      DisplayGeneric($query4); 
+
       //Function to display questions 
       function DisplayQues($query, $groupName)
-      {
+      { 
+        global $id;
           //Connection string 
           $connection = mysql_connect("localhost","root", "");
           //Run the connection string to connecct to the databse
@@ -82,11 +109,11 @@ require_once "_parts/header.php";
                  { 
                      if ($row['6'] == 2) 
                      {
-                        echo "<label class='radio'><input type = 'radio' name = '$row[question_id]' value = '1'";
+                        echo "<label class='radio'><input type = 'radio' name = '$row[id]' value = '1'";
                         if ($_POST[$row['question_id']] == '1') 
                           echo "checked";
                         echo "> Yes </label>";
-                        echo "<label class='radio'><input type = 'radio' name = '$row[question_id]' value = '2'";
+                        echo "<label class='radio'><input type = 'radio' name = '$row[id]' value = '2'";
                         if ($_POST[$row['question_id']] == '2') 
                           echo "checked";
                         echo "> No </label>";
@@ -97,57 +124,73 @@ require_once "_parts/header.php";
                       { 
                         $rate = $j + 1;
                         echo "<label class='radio'><input type = 'radio' name ='$row[0]' value = '$rate'";
-                       // if ($_POST[$row[1]] == $rate) 
-                          //echo "checked";
+                       if ($_POST[$row[0]] == $rate) 
+                       {
+                        echo "checked";
+                       }
+                          
                         echo ">".$rate."</label>";
                       }
                      }
                    if (isset($_POST['submit'])) 
                     {    
-                    if (!isset($_POST[$row['0']]))
-                    {
-                      echo "<div class='alert alert-error'>Please answer this question.</div>";
-                      $check = false;
-                    }                                  
-                 }         
+                      if (!isset($_POST[$row['0']]))
+                      {
+                        echo "<div class='alert alert-error'>Please answer this question.</div>";
+                        global $check;
+                        $check = false;
+                      }
+                                                       
+                    }
+
                  }
                  //Checks to see if it is a comment question
                   else
                     {
                       $textarea = $row['0'].$groupName;
-                      echo "<textarea class = 'span10' name = '".$textarea."'></textarea>";  
+                      echo "<textarea class = 'span10' name = '".$textarea."'>";
+                      if(isset($_POST[$textarea]))
+                        {
+                           echo $_POST[$textarea];
+                        }
+                      echo "</textarea>";  
                     }
+
                }
 
                //For session question
                else
                {  
-                  //Display question
-                  echo  "<p><strong>".$row['1'].":</strong></p>";
                   //Query to pull back sessions for the question
-                  $query2="sELECT s.session_id, q.question_id, s.title, number_of_choices, question_flag, e.event_id
+                  $query2="select s.id, q.id, s.title, number_of_choices, question_flag, e.id
                             FROM SESSION s
-                            JOIN event e ON s.event_id = e.event_id
+                            JOIN event e ON s.event_id = e.id
                             JOIN question q ON q.event_type = e.event_type
                             WHERE q.event_type = 'orientation'
                             AND group_name = '".$groupName."' 
-                             AND QUESTION_FLAG = 'R'
-                            AND `GROUP` = 'SESSION'";
+                            AND question_flag = 'R'
+                            AND `group` = 'SESSION' and e.id = $id";
                    
                   //Execute the query         
                   $result2 = mysql_query($query2, $connection) or die ("Could not execute sql: $query2");
                   //Get number of rows from question
                   $num_rows1 = mysql_num_rows($result2);
 
+                  if ($num_rows1 != 0)
+                  {
+                    //Display question
+                    echo  "<p><strong>".$row['1'].":</strong></p>";
+                  }
                   //Loops through the question and session information
                   for($k=0; $k<$num_rows1; $k++)
                   {
                      $row1 = mysql_fetch_array($result2);
-                     $session_array[]=$row1['0'];
+                     
                      echo "<p>".$row1['2']."</p>";
                       if (isset($_POST['submit'])) {    
                             if (!isset($_POST[$row1['0']])){
                               echo "<div class='alert alert-error'>Please answer this question.</div>";
+                              global $check;
                               $check = false;
                             } 
                       }
@@ -183,12 +226,19 @@ require_once "_parts/header.php";
                     else if ($row1['4'] == 'C') 
                     {
                       $textarea = $row['0'].$groupName;
-                      echo "<textarea class = 'span10' name ='".$textarea."' rows='3' cols='63'></textarea>";              
+                      echo "<textarea class = 'span10' name ='".$textarea."'>";
+                      if(isset($_POST[$textarea]))
+                        {
+                           echo $_POST[$textarea];
+                        }
+                      echo "</textarea>";              
                     }
                   }          
-                }  
-              }
-            }
+               }
+      
+          }
+          
+      }
 
             function DisplayGeneric($query)
             {           
@@ -236,29 +286,32 @@ require_once "_parts/header.php";
                   } 
                   else if ($row['3'] == 'C') 
                   {
-                    echo "<textarea class = 'span10' name ='".$row[0]."'></textarea>";              
+                    echo "<textarea class = 'span10' name ='".$row[0]."'>";
+                    if(isset($_POST[$row[0]]))
+                        {
+                           echo $_POST[$row[0]];
+                        }
+                    echo "</textarea>";              
                   }       
-              }
-            
+              }            
             }
 
        if (isset($_POST['submit'])) 
         {
-          
          if ($check == true)
          {  
-            $totalSql='';
-            $query5 = "select *
-                        FROM Question
-                        WHERE event_type = 'Orientation' ORDER BY `ORDER`";
+            //Connection string 
+            $connection = mysql_connect("localhost","root", "");
+            //Run the connection string to connecct to the databse
+            mysql_select_db("tfscdb", $connection) or die("Cannot open the database"); 
+
+            $query5 = "select * FROM question WHERE event_type = 'ORIENTATION' ORDER BY `order`;";
             //execute the query           
             $result = mysql_query($query5, $connection) or die ("Could not execute sql: ".$query5);
           
             // get result record
             $num_rows = mysql_num_rows($result);
-
             
-            //insert each line of answer
             for ($j=0; $j<$num_rows ; $j++) 
             { 
                   $row = mysql_fetch_array($result);
@@ -271,7 +324,7 @@ require_once "_parts/header.php";
 
                     if ($row['3'] == 'R')
                     {
-                     $sql = "insert into evaluation(`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null,$row[0],2,$sessionid,$rating,NULL);";
+                     $sql = "insert into evaluation(`id`, `question_id`, `event_id`, `session_id`, `user_rating`, `user_comment`) values(null,$row[0],$id,$sessionid,$rating,NULL);";
                     }
                  
                     else  
@@ -279,11 +332,11 @@ require_once "_parts/header.php";
                        $answer = $_POST[$row['0']]; 
                        if ($answer != null) 
                        {
-                        $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[0], 2, NULL, NULL, '$answer');";
+                        $sql = "insert into evaluation (`id`, `question_id`, `event_id`, `session_id`, `user_rating`, `user_comment`) values(null, $row[0], $id, NULL, NULL, '$answer');";
                        }
                        else
                        {
-                        $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[0], 2, NULL, NULL, '');";                     
+                        $sql = "insert into evaluation (`id`, `question_id`, `event_id`, `session_id`, `user_rating`, `user_comment`) values(null, $row[0], $id, NULL, NULL, '');";                     
                        }
                       
                     }
@@ -294,12 +347,12 @@ require_once "_parts/header.php";
                   else
                   { 
                     $comment=$_POST[$row['0']];
-                    $query2 = "sELECT Q.question_id, S.session_id, e.event_id
-                                  FROM QUESTION Q
-                                  JOIN EVENT E ON E.EVENT_TYPE = Q.EVENT_TYPE
-                                  JOIN SESSION S ON S.EVENT_ID = E.EVENT_ID
-                                  WHERE E.EVENT_ID =2
-                                  AND QUESTION_ID =36";
+                    $query2 = "select Q.id, S.id, e.id
+                                  FROM question Q
+                                  JOIN event E ON E.event_type = Q.event_type
+                                  JOIN session S ON S.event_id = E.id
+                                  WHERE E.id =$id
+                                  AND q.id =36";
           
                        $resultSession = mysql_query($query2, $connection) or die ("Could not execute sql: $query2");
                        $numSession = mysql_num_rows($resultSession);
@@ -312,28 +365,29 @@ require_once "_parts/header.php";
 
                           if ($row['3'] == 'R')
                           {
-                           $sql = "insert into evaluation(`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null,$row[0],2,$sessionid,$rating,NULL);";
+                           $sql = "insert into evaluation(`id`, `question_id`, `event_id`, `session_id`, `user_rating`, `user_comment`) values(null,$row[0],$id,$sessionid,$rating,NULL);";
                           }
                        
                           else  
                           {
                              if ($answer != null) 
                              {
-                              $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[0], 2, NULL, NULL, $comment);";
+                              $sql = "insert into evaluation (`id`, `question_id`, `event_id`, `session_id`, `user_rating`, `user_comment`) values(null, $row[0], $id, NULL, NULL, $comment);";
                              }
                              else
                              {
-                              $sql = "insert into evaluation (`Evaluation_ID`, `Question_ID`, `Event_ID`, `Session_ID`, `User_Rating`, `User_Comment`) values(null, $row[0], 2, NULL, NULL, '');";                     
+                              $sql = "insert into evaluation (`id`, `question_id`, `event_id`, `session_id`, `user_rating`, `user_comment`) values(null, $row[0], $id, NULL, NULL, '');";                     
                              }
                           }
                           //Insert data from form into evaluation table 
                            $insert = mysql_query($sql, $connection) or die ("Could not excute sql:".$sql);   
                        }
                     }
-                  }                
-                }    
-                header("Location: thanks.php");
-              }             
+            } 
+            echo "<script>location.href='thanks.php';</script>";              
+         }    
+          
+        }             
           ?>
            <center><button class ="btn" name = "submit"/>Submit</button></center>
           </form> 
