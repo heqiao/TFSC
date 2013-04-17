@@ -1,12 +1,20 @@
 $(document).ready(function () {
+	
+	//active
+	var active_num = $('.tabbable', '.active');
+	// console.log(active_num.size());
+	if (active_num.size() ==0) {
+		$('#li-ta').addClass('active');
+		};
 	// datepicker
 	$(".datepicker").datepicker({
 		dateFormat: 'yy-mm-dd'
 	});
-	var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
-	$(".sessionSpeaker").typeahead({
-		source: typeahead_source
-	});
+	// var typeahead_source = ['Aaaa', 'Abbb', 'Accc'];
+	// $(".sessionSpeaker").typeahead({
+	// 	source: typeahead_source
+	// });
+	
 //view to add the sessions
 	var breakout_num = 1;
 	var speaker_num = 1;
@@ -17,7 +25,7 @@ $(document).ready(function () {
 		className: 'event-session alert alert-info',
 		template: _.template($('#session-template-symp').html()), 
 		events: {
-			
+			"click .break": "removeDiv",
 			"click .new-speaker": "addSpeaker"
 		},
 		initialize: function () {
@@ -27,9 +35,15 @@ $(document).ready(function () {
 			if(speaker_sec_num.size() == 0)
 			{
 				this.addSpeaker();
-				//speaker_num++;
 			};
 		},
+		removeDiv: function(){
+			var session_group = $('.event-session');
+			if (session_group.size() == 1) {
+				$('#eventSubmit-symp').attr('disabled','disabled');
+			};
+		},
+		
 		addSpeaker: function() {
 			var session_num = this.options.session_num;
 			//var speaker_num = this.options.speaker_num;
@@ -53,12 +67,10 @@ $(document).ready(function () {
 		initialize: function () {
 			this.$el.html(this.template(this.options));
 			var session_sec_num = this.$('.event-session alert alert-info');
-			//console.log(session_sec_num);	
-			// alert(session_sec_num.size());		
+			//console.log(session_sec_num);		
 			if(session_sec_num.size() == 0)
 			{
 				this.newSubSession();
-				//session_num++;
 			};
 		},
 		newSubSession: function () {
@@ -69,6 +81,7 @@ $(document).ready(function () {
 			});
 			this.$('.addSub').before(subSessionView.el);
 			session_num ++;
+			$('#eventSubmit-symp').removeAttr('disabled');
 		}
 	});
 //view of speakers
@@ -85,7 +98,9 @@ $(document).ready(function () {
 	var SymposiumFormView = Backbone.View.extend({
 		// HTML
 		el: $('#main-form-symposium'),
-
+		initialize: function() {
+			this.newSession();
+		},
 		// Event
 		events: {
 			"click #new-session": "newSession",
@@ -97,6 +112,8 @@ $(document).ready(function () {
 			});
 			$('.symp-session-section').before(breakoutView.el);
 			breakout_num ++;
+
+			$('#eventSubmit-symp').removeAttr('disabled');
 		},
 		newSession: function () {
 			var sessionView = new SympSessionView({
@@ -106,6 +123,8 @@ $(document).ready(function () {
 			$('.symp-session-section').before(sessionView.el);
 			$('.sessionDesc').focus();
 			session_num ++;
+
+			$('#eventSubmit-symp').removeAttr('disabled');
 		}
 	});
 	//Retreat session view
@@ -115,7 +134,6 @@ $(document).ready(function () {
 		className: 'retreat-session alert alert-info',
 		template: _.template($('#session-template-retreat').html()), 
 		initialize: function () {
-			// console.log(this.options);
 			this.$el.html(this.template(this.options));
 			}
 		});
@@ -123,10 +141,19 @@ $(document).ready(function () {
 	var RetreatFormView	= Backbone.View.extend({
 		// HTML
 		el: $('#main-form-retreat'),
-
+		initialize: function() {
+			this.newRetreatSession();
+		},
 		// Event
 		events:{
+			"click .closeRetreat" :"removeDiv",
 			"click #new-session-retreat":"newRetreatSession"
+		},
+		removeDiv: function(){
+			var session_group = $('.retreat-session');
+			if (session_group.size() == 1) {
+				$('#eventSubmit-retreat').attr('disabled','disabled');
+			};
 		},
 		newRetreatSession: function(){
 			var retreatSessionView = new RetreatSessionView({
@@ -134,6 +161,7 @@ $(document).ready(function () {
 			}); 
 			$('.retreat-session-section').before(retreatSessionView.el);
 			session_num ++;
+		$('#eventSubmit-retreat').removeAttr('disabled');	
 		}
 	});
 	//Orient session view
@@ -151,10 +179,19 @@ $(document).ready(function () {
 	var OrientFormView	= Backbone.View.extend({
 		// HTML
 		el: $('#main-form-orient'),
-
+		initialize: function() {
+			this.newOrientSession();
+		},
 		// Event
 		events:{
+			"click .closeOrient" :"removeDiv",
 			"click #new-session-orient":"newOrientSession"
+		},
+		removeDiv: function(){
+			var session_group = $('.orient-session');
+			if (session_group.size() == 1) {
+				$('#eventSubmit-orient').attr('disabled','disabled');
+			};
 		},
 		newOrientSession: function(){
 			var orientSessionView = new OrientSessionView({
@@ -162,11 +199,11 @@ $(document).ready(function () {
 			}); 
 			$('.orient-session-section').before(orientSessionView.el);
 			session_num ++;
+			$('#eventSubmit-orient').removeAttr('disabled');
 		}
 	});
 	var symposium_form_view = new SymposiumFormView();
 	var retreat_form_view = new RetreatFormView();
 	var orient_form_view = new OrientFormView();
 	//console.log(orient_form_view.events);
-
 });

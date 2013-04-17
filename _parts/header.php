@@ -44,8 +44,8 @@
 	<a class="banner-uark-link-homepage" href="http://www.uark.edu/" title="University of Arkansas">
 		<span class="hidden">University of Arkansas</span>
 	</a>
-	<div class="site-identifier"> 
 		<h3>Event Evaluation</h3>
 		<h4>Teaching and Faculty Support Center</h4>
+		<div class="site-identifier"> 
 	</div>
 </div>

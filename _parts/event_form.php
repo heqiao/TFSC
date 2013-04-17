@@ -64,6 +64,6 @@
 <!-- sumbit form -->
 <div class="control-group">
 	<div class="controls">
-		<button class="btn" type="submit" name ="submitEvent<?php echo $event_type;?>">Add Event</button>
+		<button class="btn" type="submit" name ="submitEvent<?php echo $event_type;?>" id="eventSubmit<?php echo $event_type;?>">Add Event</button>
 	</div>
 </div>
